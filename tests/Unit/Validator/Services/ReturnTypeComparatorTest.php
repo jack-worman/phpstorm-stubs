@@ -25,11 +25,7 @@ class ReturnTypeComparatorTest extends TestCase
         return [
             'identical' => ['string', 'string', 'identical types match'],
             'both null' => [null, null, 'two absent types match'],
-            // stub `static` vs a concrete reflection class name
-            'static vs class name' => ['DateTime', 'static', 'covariant static matches a class name'],
-            'static|null vs Class|null' => ['SimpleXMLElement|null', 'static|null', 'inherited static in a union'],
             'static on both sides' => ['static', 'static', 'directly equivalent'],
-            'static with extra union part' => ['DateTime|false', 'static|false', 'non-static parts match exactly'],
             // stub narrowing bool (the TentativeType pattern)
             'true narrows bool' => ['bool', 'true', 'stub is intentionally more specific'],
             'false narrows bool' => ['bool', 'false', 'stub is intentionally more specific'],
@@ -52,9 +48,11 @@ class ReturnTypeComparatorTest extends TestCase
             'true does not narrow int' => ['int', 'true', 'only bool may be narrowed'],
             'true does not narrow string|bool' => ['string|bool', 'true', 'the wider type is not plain bool'],
             'bool does not widen to true' => ['true', 'bool', 'the allowance is one-directional'],
-            // static must still leave the remaining union matching
+            // a class name does not promise an instance of the called class
+            'static vs class name' => ['DateTime', 'static', 'DateTime::__set_state() returns a DateTime'],
+            'static|null vs Class|null' => ['Phar|null', 'static|null', 'Phar::compress() returns a Phar'],
             'static with mismatched extra part' => ['DateTime|false', 'static|null', 'null vs false differ'],
-            'static but reflection is primitive only' => ['int', 'static', 'no class-name component to consume'],
+            'static but reflection is primitive only' => ['int', 'static', 'no class name at all'],
         ];
     }
 

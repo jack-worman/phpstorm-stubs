@@ -243,10 +243,9 @@ class ClassMethodsReturnTypesCheckTest extends CheckTestCase
 
     // ── Static return type ────────────────────────────────────────────────────
 
-    public function testStaticReturnTypeMatchesConcreteClassName(): void
+    public function testStaticReturnTypeDoesNotMatchConcreteClassName(): void
     {
-        // Stub declares 'static' — reflection (pre-8.0 style) reports the concrete class name.
-        // 'static' in context of \MyClass means MyClass, so they are equivalent.
+        // A method PHP declares as returning MyClass may return a MyClass when called on a subclass.
         $className = '\MyClass';
 
         $stubMethod = new PHPMethod();
@@ -274,13 +273,11 @@ class ClassMethodsReturnTypesCheckTest extends CheckTestCase
 
         $result = (new ClassMethodsReturnTypesCheck($provider))->run($stubs, $className, '8.0');
 
-        $this->assertFalse($result->hasFailures(), 'static should match the concrete class name');
+        $this->assertTrue($result->hasFailures(), 'static should not match the concrete class name');
     }
 
-    public function testStaticUnionReturnTypeMatchesConcreteClassNameInUnion(): void
+    public function testStaticUnionReturnTypeDoesNotMatchConcreteClassNameInUnion(): void
     {
-        // Stub declares 'static|null' — reflection reports 'MyClass|null'.
-        // After substituting static → MyClass, they match.
         $className = '\MyClass';
 
         $stubMethod = new PHPMethod();
@@ -309,7 +306,7 @@ class ClassMethodsReturnTypesCheckTest extends CheckTestCase
 
         $result = (new ClassMethodsReturnTypesCheck($provider))->run($stubs, $className, '8.0');
 
-        $this->assertFalse($result->hasFailures(), 'static|null should match MyClass|null');
+        $this->assertTrue($result->hasFailures(), 'static|null should not match MyClass|null');
     }
 
     public function testBothStaticReturnTypesMatch(): void
@@ -345,11 +342,10 @@ class ClassMethodsReturnTypesCheckTest extends CheckTestCase
         $this->assertFalse($result->hasFailures(), 'static == static should pass directly');
     }
 
-    public function testStaticReturnTypeInheritedMethodMatchesParentClassInReflection(): void
+    public function testStaticReturnTypeInheritedMethodDoesNotMatchParentClassInReflection(): void
     {
-        // When a method is inherited from a parent with 'static|null' return, PHP reflection
-        // for the child class still reports the PARENT class type (e.g. 'ParentClass|null').
-        // The non-static union parts ('null') must still match.
+        // Reflection for the child reports the parent's declared 'ParentClass|null'; a stub that
+        // knows better (SimpleXMLElement::children()) needs a known problem saying why.
         $childClassName = '\ChildClass';
 
         $stubMethod = new PHPMethod();
@@ -378,7 +374,7 @@ class ClassMethodsReturnTypesCheckTest extends CheckTestCase
 
         $result = (new ClassMethodsReturnTypesCheck($provider))->run($stubs, $childClassName, '8.0');
 
-        $this->assertFalse($result->hasFailures(), 'static|null from parent should match ParentClass|null in reflection');
+        $this->assertTrue($result->hasFailures(), 'static|null from parent should not match ParentClass|null in reflection');
     }
 
     public function testStaticReturnTypeReportsFailureForUnrelatedType(): void

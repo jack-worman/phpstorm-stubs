@@ -232,7 +232,7 @@ class Phar extends RecursiveDirectoryIterator implements RecursiveIterator, Seek
      * variable is on, the zlib extension is not available, or the bzip2 extension is not enabled.
      */
     #[TentativeType]
-    #[LanguageLevelTypeAware(['8.0' => 'static|null'], default: '')]
+    #[LanguageLevelTypeAware(['8.0' => 'Phar|null'], default: '')]
     public function compress(
         #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $compression,
         #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $extension = null
@@ -254,7 +254,7 @@ class Phar extends RecursiveDirectoryIterator implements RecursiveIterator, Seek
      * variable is on, the zlib extension is not available, or the bzip2 extension is not enabled.
      */
     #[TentativeType]
-    #[LanguageLevelTypeAware(['8.0' => 'static|null'], default: '')]
+    #[LanguageLevelTypeAware(['8.0' => 'Phar|null'], default: '')]
     public function decompress(#[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $extension = null) {}
 
     /**
@@ -1389,7 +1389,7 @@ class PharData extends RecursiveDirectoryIterator implements Countable, ArrayAcc
      * @throws \BadMethodCallException Throws BadMethodCallException if the zlib extension is not
      * available, or the bzip2 extension is not enabled.
      */
-    #[LanguageLevelTypeAware(['8.0' => 'static|null'], default: '')]
+    #[LanguageLevelTypeAware(['8.0' => 'PharData|null'], default: '')]
     #[TentativeType]
     public function compress(
         #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $compression,
@@ -1411,7 +1411,7 @@ class PharData extends RecursiveDirectoryIterator implements Countable, ArrayAcc
      * @throws \BadMethodCallException Throws BadMethodCallException if the zlib extension is not
      * available, or the bzip2 extension is not enabled.
      */
-    #[LanguageLevelTypeAware(['8.0' => 'static|null'], default: '')]
+    #[LanguageLevelTypeAware(['8.0' => 'PharData|null'], default: '')]
     #[TentativeType]
     public function decompress(#[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $extension = null) {}
 

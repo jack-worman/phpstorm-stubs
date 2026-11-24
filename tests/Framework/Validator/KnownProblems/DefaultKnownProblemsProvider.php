@@ -409,6 +409,51 @@ class DefaultKnownProblemsProvider implements KnownProblemsProvider
                 reason: 'SoapServer exposes internal C-level implementation properties ($service, $__soap_fault) that became visible via reflection in PHP 8.1 after an internal refactoring. These are undocumented implementation details not intended for user access and are not declared in stubs.'
             ),
 
+            // SimpleXML creates nodes with the class of the node a method is called on
+            new ProblemDefinition(
+                entityType: EntityType::METHOD,
+                entityId: 'simplexml-static-returns',
+                type: ProblemType::INTERNAL_IMPLEMENTATION,
+                affectedChecks: [CheckType::RETURN_TYPES],
+                versionRange: new PhpVersionRange(PhpVersions::EARLIEST, PhpVersions::LATEST),
+                reason: 'SimpleXML builds child and attribute nodes with the class of the node they are called on, so these return static; PHP declares SimpleXMLElement.',
+                entityIds: [
+                    '\\SimpleXMLElement::addChild',
+                    '\\SimpleXMLElement::attributes',
+                    '\\SimpleXMLElement::children',
+                    '\\SimpleXMLIterator::addChild',
+                    '\\SimpleXMLIterator::attributes',
+                    '\\SimpleXMLIterator::children',
+                ],
+            ),
+
+            // DateTime::modify() returns $this and DateTimeImmutable::modify() a clone of it
+            new ProblemDefinition(
+                entityType: EntityType::METHOD,
+                entityId: 'date-modify-static-returns',
+                type: ProblemType::INTERNAL_IMPLEMENTATION,
+                affectedChecks: [CheckType::RETURN_TYPES],
+                versionRange: new PhpVersionRange(PhpVersions::PHP_8_1, PhpVersions::PHP_8_3),
+                reason: 'modify() returns an object of the class it is called on, so the stubs return static (WI-80572); PHP declares DateTime and DateTimeImmutable.',
+                entityIds: ['\\DateTime::modify', '\\DateTimeImmutable::modify'],
+            ),
+
+            // PHP 8.6 declares static on these __set_state() methods, but still builds the base class
+            new ProblemDefinition(
+                entityType: EntityType::METHOD,
+                entityId: 'date-set-state-static-declarations',
+                type: ProblemType::INTERNAL_IMPLEMENTATION,
+                affectedChecks: [CheckType::RETURN_TYPES],
+                versionRange: new PhpVersionRange(PhpVersions::PHP_8_6, PhpVersions::LATEST),
+                reason: 'PHP 8.6 declares a tentative static return, but __set_state() still instantiates the base class when called on a subclass.',
+                entityIds: [
+                    '\\DateTimeImmutable::__set_state',
+                    '\\DateTimeZone::__set_state',
+                    '\\DateInterval::__set_state',
+                    '\\DatePeriod::__set_state',
+                ],
+            ),
+
             // ── ClassMethodsParametersCountCheck known problems ───────────────────────
 
             // Closure::__invoke - reflection reports the concrete closure signature (0 params for the generic stub)
