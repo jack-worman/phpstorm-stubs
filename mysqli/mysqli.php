@@ -3893,7 +3893,7 @@ define('MYSQLI_REFRESH_REPLICA', 64);
  * @since 8.1
  * @deprecated 8.2
  */
-define('MYSQLI_IS_MARIADB', 0);
+define('MYSQLI_IS_MARIADB', false);
 
 /**
  * @since 8.4

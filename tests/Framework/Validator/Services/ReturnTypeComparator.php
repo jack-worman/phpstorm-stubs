@@ -6,7 +6,7 @@ namespace StubTests\Framework\Validator\Services;
  * Decides whether a stub return type is equivalent to the reflected one.
  *
  * Extracted because the method and function variants of the return-type check had drifted:
- * ClassMethodsReturnTypesCheck carried two deliberate allowances that
+ * ClassMethodsReturnTypesCheck carried deliberate allowances that
  * Functions/FunctionReturnTypesCheck did not, and AbstractCallableCheck::findCallable()
  * resolves "Class::method" ids — so the function variant *can* be handed a method, and would
  * then report a mismatch its sibling accepts. Sharing the decision makes that drift
@@ -18,7 +18,10 @@ namespace StubTests\Framework\Validator\Services;
 final class ReturnTypeComparator
 {
     /**
-     * Are the two already-normalised types equivalent, allowing for the documented cases?
+     * Are the two already-normalised types equivalent, allowing for the documented case?
+     *
+     * A stub `static` is not equivalent to a class name: methods such as Phar::compress() and
+     * DateTime::__set_state() return an instance of the base class even when called on a subclass.
      *
      * @param string|null $normalizedRefl Normalised reflection type
      * @param string|null $normalizedStub Normalised stub type
@@ -29,58 +32,7 @@ final class ReturnTypeComparator
             return true;
         }
 
-        if (self::stubStaticMatchesReflectionClassName($normalizedRefl, $normalizedStub)) {
-            return true;
-        }
-
         return self::stubNarrowsBool($normalizedRefl, $normalizedStub);
-    }
-
-    /**
-     * A stub may declare the covariant `static` where reflection names a concrete class.
-     *
-     * Each `static` component in the stub must correspond to a class-name (non-primitive)
-     * component in reflection; the remaining union parts must then match exactly. This covers
-     * both direct declarations (stub `static` vs reflection `DateTime`) and inherited methods
-     * (stub `static|null` from SimpleXMLElement vs reflection `SimpleXMLElement|null` reported
-     * for SimpleXMLIterator).
-     *
-     * Note this is meaningless for global functions — there is no late static binding without a
-     * class — but it is harmless there, and keeping one implementation is the point.
-     */
-    private static function stubStaticMatchesReflectionClassName(?string $normalizedRefl, ?string $normalizedStub): bool
-    {
-        if ($normalizedStub === null || !str_contains($normalizedStub, 'static')) {
-            return false;
-        }
-
-        // If reflection also says 'static', the two are directly equivalent.
-        if ($normalizedRefl !== null && str_contains($normalizedRefl, 'static')) {
-            return true;
-        }
-
-        $primitives = TypeResolver::PRIMITIVES;
-        $stubParts = explode('|', $normalizedStub);
-        $reflParts = explode('|', (string)$normalizedRefl);
-
-        foreach ($stubParts as $stubKey => $part) {
-            if ($part !== 'static') {
-                continue;
-            }
-            // Consume a class-name component from the reflection side.
-            foreach ($reflParts as $reflKey => $reflPart) {
-                if (!in_array($reflPart, $primitives, true)) {
-                    unset($reflParts[$reflKey]);
-                    break;
-                }
-            }
-            unset($stubParts[$stubKey]);
-        }
-
-        sort($stubParts);
-        sort($reflParts);
-
-        return array_values($stubParts) === array_values($reflParts);
     }
 
     /**

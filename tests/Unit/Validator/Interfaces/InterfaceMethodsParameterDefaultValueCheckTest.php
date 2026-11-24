@@ -31,10 +31,10 @@ class InterfaceMethodsParameterDefaultValueCheckTest extends CheckTestCase
         return $iface;
     }
 
-    public function testSupportsOnlyLatestPhpVersion(): void
+    public function testSupportsFromPhp80(): void
     {
         $this->assertFalse($this->check->supports(PhpVersions::EARLIEST->value));
-        $this->assertFalse($this->check->supports(PhpVersions::PHP_8_3->value));
+        $this->assertTrue($this->check->supports(PhpVersions::PHP_8_3->value));
         $this->assertTrue($this->check->supports(PhpVersions::LATEST->value));
     }
 

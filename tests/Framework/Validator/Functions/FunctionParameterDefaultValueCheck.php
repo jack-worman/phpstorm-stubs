@@ -3,7 +3,6 @@
 namespace StubTests\Framework\Validator\Functions;
 
 use StubTests\Framework\Storage\StubDataQueryInterface;
-use StubTests\Framework\Runner\PhpVersions;
 use StubTests\Framework\Validator\AbstractCallableCheck;
 use StubTests\Framework\Validator\Contracts\CheckResultSet;
 use StubTests\Framework\Validator\KnownProblems\CheckType;
@@ -14,8 +13,9 @@ use StubTests\Framework\Validator\Services\ParameterFilterHelper;
 /**
  * Validates that default parameter values in stub functions match those in reflection.
  *
- * Only runs against the latest PHP version since stubs do not support version-aware
- * default values (no LanguageLevelTypeAware equivalent for defaults).
+ * Runs from PHP 8.0, the first version whose reflection reports internal defaults. Below the
+ * latest version only declarations that end before it are compared (see
+ * ParameterDefaultValueComparator::filterComparableAt()).
  *
  * For each function identified by $entityId the validator:
  * 1. Looks up the function in reflection and stubs.
@@ -33,7 +33,7 @@ class FunctionParameterDefaultValueCheck extends AbstractCallableCheck
 {
     public function supports(string $phpVersion): bool
     {
-        return $phpVersion === PhpVersions::LATEST->value;
+        return version_compare($phpVersion, '8.0', '>=');
     }
 
     public function run(StubDataQueryInterface $stubs, string $entityId, string $phpVersion): CheckResultSet
@@ -66,6 +66,7 @@ class FunctionParameterDefaultValueCheck extends AbstractCallableCheck
             $stubParamsByName[$param->getName()] = $param;
         }
 
+        $stubParamsByName = ParameterDefaultValueComparator::filterComparableAt($stubParamsByName, $stubFunction, $phpVersion);
         $mismatches = ParameterDefaultValueComparator::buildMismatches($reflFunction->getParameters(), $stubParamsByName);
 
         if (!empty($mismatches)) {

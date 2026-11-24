@@ -64,6 +64,42 @@ class ConstantValueCheckTest extends CheckTestCase
         $this->assertFalse($result->hasFailures());
     }
 
+    public function testRemovedConstantIsComparedAtItsLastVersion(): void
+    {
+        $constantId = '\\REMOVED_IN_80';
+        $stubs = $this->createMockStorageManager();
+        $stubs->method('getConstants')->willReturn([$this->makeGlobalConstant($constantId, 1)]);
+
+        $result = (new ConstantValueCheck($this->providerWithConstantUntil74($constantId, 2)))->run($stubs, $constantId, PhpVersions::PHP_7_4->value);
+
+        $this->assertTrue($result->hasFailures());
+        $this->assertStringContainsString("reflection='2', stub='1'", $result->getFailures()[$constantId]);
+    }
+
+    public function testRemovedConstantIsNotComparedBeforeItsLastVersion(): void
+    {
+        $constantId = '\\REMOVED_IN_80';
+        $stubs = $this->createMockStorageManager();
+        $stubs->method('getConstants')->willReturn([$this->makeGlobalConstant($constantId, 1)]);
+
+        $result = (new ConstantValueCheck($this->providerWithConstantUntil74($constantId, 2)))->run($stubs, $constantId, PhpVersions::PHP_7_3->value);
+
+        $this->assertFalse($result->hasFailures());
+    }
+
+    private function providerWithConstantUntil74(string $constantId, mixed $value): ReflectionProviderInterface
+    {
+        $provider = $this->createStub(ReflectionProviderInterface::class);
+        $provider->method('getReflection')->willReturnCallback(function (string $phpVersion) use ($constantId, $value) {
+            $manager = $this->createMockStorageManager();
+            $manager->method('getConstants')->willReturn(
+                version_compare($phpVersion, '8.0', '<') ? [$this->makeGlobalConstant($constantId, $value)] : []
+            );
+            return $manager;
+        });
+        return $provider;
+    }
+
     // ── Matching values ───────────────────────────────────────────────────────
 
     public function testMatchingIntegerValuePasses(): void

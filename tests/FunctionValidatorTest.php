@@ -58,7 +58,7 @@ class FunctionValidatorTest extends ValidatorTestBase
             // that. Narrowed to LATEST..LATEST in 06eb7e14 as collateral of an unrelated commit;
             // restored so 8.1-8.5 are validated too.
             'checkFunctionTentativeReturnType' => new CheckDescriptor(FunctionTentativeReturnTypeCheck::class, PhpVersions::PHP_8_1, PhpVersions::LATEST, 'Function {entityId} tentative return type check failed in PHP {phpVersion}'),
-            'checkFunctionParameterDefaultValue' => new CheckDescriptor(FunctionParameterDefaultValueCheck::class, PhpVersions::LATEST, PhpVersions::LATEST, 'Function {entityId} parameter default value check failed in PHP {phpVersion}'),
+            'checkFunctionParameterDefaultValue' => new CheckDescriptor(FunctionParameterDefaultValueCheck::class, PhpVersions::PHP_8_0, PhpVersions::LATEST, 'Function {entityId} parameter default value check failed in PHP {phpVersion}'),
             'checkFunctionPhpDocConformsSignature' => new CheckDescriptor(FunctionPhpDocConformsSignatureCheck::class, PhpVersions::EARLIEST, PhpVersions::LATEST, 'Function {entityId} PhpDoc/signature type mismatch in PHP {phpVersion}'),
             // Array-traversal functions (end, prev, next, reset, current) must declare
             // 'mixed|false' in PhpDoc @return — the broad 'mixed' erases the 'false' case.

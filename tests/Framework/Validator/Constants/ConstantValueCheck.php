@@ -3,7 +3,6 @@
 namespace StubTests\Framework\Validator\Constants;
 
 use StubTests\Framework\Storage\StubDataQueryInterface;
-use StubTests\Framework\Runner\PhpVersions;
 use StubTests\Framework\Validator\AbstractReflectionCheck;
 use StubTests\Framework\Validator\Contracts\CheckResultSet;
 use StubTests\Framework\Validator\Contracts\ReflectionProviderInterface;
@@ -12,15 +11,16 @@ use StubTests\Framework\Validator\KnownProblems\EntityType;
 use StubTests\Framework\Validator\KnownProblemsRegistry;
 use StubTests\Framework\Validator\Services\ConstantValueComparator;
 use StubTests\Framework\Validator\Services\EntityLookupService;
+use StubTests\Framework\Validator\Services\LastReflectedVersionService;
 
 /**
  * Validates that the values of global constants in stubs match reflection.
  *
- * Value comparison is intentionally limited to the latest PHP version to avoid
- * false positives from historical value changes across PHP releases.
+ * Value comparison is limited to the last PHP version that has the constant: the latest one, or
+ * the one before PHP removed it. Earlier versions would only report historical value changes.
  *
  * For each constant identified by $entityId the validator:
- * 1. Skips comparison for non-LATEST PHP versions.
+ * 1. Skips comparison unless no later version has the constant.
  * 2. Looks up the constant in reflection by ID.
  * 3. Looks up the constant in stubs by ID.
  * 4. If not found in either, silently succeeds — ConstantExistsCheck handles existence.
@@ -33,6 +33,7 @@ use StubTests\Framework\Validator\Services\EntityLookupService;
 class ConstantValueCheck extends AbstractReflectionCheck
 {
     private EntityLookupService $entityLookup;
+    private LastReflectedVersionService $lastReflectedVersion;
 
     public function __construct(
         ?ReflectionProviderInterface $reflectionProvider = null,
@@ -41,6 +42,7 @@ class ConstantValueCheck extends AbstractReflectionCheck
     ) {
         parent::__construct($reflectionProvider, $knownProblemsRegistry);
         $this->entityLookup = $entityLookup ?? new EntityLookupService();
+        $this->lastReflectedVersion = new LastReflectedVersionService($this->reflectionProvider);
     }
 
     public function supports(string $phpVersion): bool
@@ -56,8 +58,8 @@ class ConstantValueCheck extends AbstractReflectionCheck
             return $results;
         }
 
-        // Value comparison is only meaningful at the latest PHP version
-        if ($phpVersion !== PhpVersions::LATEST->value) {
+        $existsIn = fn (StubDataQueryInterface $reflection): bool => $this->entityLookup->findConstantById($reflection, $entityId) !== null;
+        if (!$this->lastReflectedVersion->isLastVersionWith($phpVersion, $existsIn)) {
             $results->addSuccess($entityId);
             return $results;
         }

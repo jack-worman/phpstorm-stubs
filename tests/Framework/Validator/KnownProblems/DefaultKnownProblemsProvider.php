@@ -345,20 +345,26 @@ class DefaultKnownProblemsProvider implements KnownProblemsProvider
             // pdo_pgsql, so reflection reports neither the pgsql* nor (in some builds) the
             // sqliteCreate* family. Stubs must declare them for users who do have those drivers.
             new ProblemDefinition(
-                entityType: EntityType::CLASS_TYPE,
-                entityId: '\\PDO',
+                entityType: EntityType::METHOD,
+                entityId: 'pdo-driver-methods',
                 type: ProblemType::INTERNAL_IMPLEMENTATION,
                 affectedChecks: [CheckType::CLASS_STALE_METHODS],
                 versionRange: new PhpVersionRange(PhpVersions::EARLIEST, PhpVersions::LATEST),
-                reason: 'PDO exposes driver-specific methods (sqliteCreateAggregate/Collation/Function, pgsqlCopyFrom*/CopyTo*, pgsqlLOB*, pgsqlGetNotify, pgsqlGetPid) that exist only when that driver is compiled in. Reflection in the cache-generating container reports only the drivers it was built with, so these read as stub-only regardless of whether the stub is correct.'
-            ),
-            new ProblemDefinition(
-                entityType: EntityType::CLASS_TYPE,
-                entityId: '\\PDOStatement',
-                type: ProblemType::INTERNAL_IMPLEMENTATION,
-                affectedChecks: [CheckType::CLASS_STALE_METHODS],
-                versionRange: new PhpVersionRange(PhpVersions::EARLIEST, PhpVersions::LATEST),
-                reason: 'PDOStatement::connect is a driver-level entry point that reflection does not report on the base class; same rationale as \\PDO above.'
+                reason: 'PDO exposes driver-specific methods (sqliteCreateAggregate/Collation/Function, pgsqlCopyFrom*/CopyTo*, pgsqlLOB*, pgsqlGetNotify, pgsqlGetPid) that exist only when that driver is compiled in. Reflection in the cache-generating container reports only the drivers it was built with, so these read as stub-only regardless of whether the stub is correct.',
+                entityIds: [
+                    '\\PDO::pgsqlCopyFromArray',
+                    '\\PDO::pgsqlCopyFromFile',
+                    '\\PDO::pgsqlCopyToArray',
+                    '\\PDO::pgsqlCopyToFile',
+                    '\\PDO::pgsqlGetNotify',
+                    '\\PDO::pgsqlGetPid',
+                    '\\PDO::pgsqlLOBCreate',
+                    '\\PDO::pgsqlLOBOpen',
+                    '\\PDO::pgsqlLOBUnlink',
+                    '\\PDO::sqliteCreateAggregate',
+                    '\\PDO::sqliteCreateCollation',
+                    '\\PDO::sqliteCreateFunction',
+                ],
             ),
 
             // SimpleXMLElement implements ArrayAccess and Iterator through internal object handlers
@@ -371,16 +377,6 @@ class DefaultKnownProblemsProvider implements KnownProblemsProvider
                 affectedChecks: [CheckType::CLASS_STALE_METHODS],
                 versionRange: new PhpVersionRange(PhpVersions::EARLIEST, PhpVersions::LATEST),
                 reason: 'SimpleXMLElement satisfies ArrayAccess (offsetExists/Get/Set/Unset) and Iterator (rewind/valid/current/key/next) via internal C handlers rather than declared methods, so reflection reports none of them while they are all callable. Stubs must declare them for completion and type inference.'
-            ),
-
-            // DOM methods whose presence varies across versions in a way stubs cannot yet express.
-            new ProblemDefinition(
-                entityType: EntityType::CLASS_TYPE,
-                entityId: '\\DOMNode',
-                type: ProblemType::INTERNAL_IMPLEMENTATION,
-                affectedChecks: [CheckType::CLASS_STALE_METHODS],
-                versionRange: new PhpVersionRange(PhpVersions::EARLIEST, PhpVersions::LATEST),
-                reason: 'compareDocumentPosition and isEqualNode are reported by reflection at 7.4, absent 8.0-8.2, and present again from 8.3/8.4 onward. PHP documents both as added in 8.3, which contradicts the 7.4 reading, so the correct bound is unclear and the stubs are left unbounded pending investigation rather than annotated on an uncertain basis.'
             ),
 
             // SplFixedArray - interfaces changed across PHP versions; stubs declare the union
@@ -411,6 +407,51 @@ class DefaultKnownProblemsProvider implements KnownProblemsProvider
                 affectedChecks: [CheckType::CLASS_PROPERTIES_EXIST],
                 versionRange: new PhpVersionRange(PhpVersions::PHP_8_1, PhpVersions::LATEST),
                 reason: 'SoapServer exposes internal C-level implementation properties ($service, $__soap_fault) that became visible via reflection in PHP 8.1 after an internal refactoring. These are undocumented implementation details not intended for user access and are not declared in stubs.'
+            ),
+
+            // SimpleXML creates nodes with the class of the node a method is called on
+            new ProblemDefinition(
+                entityType: EntityType::METHOD,
+                entityId: 'simplexml-static-returns',
+                type: ProblemType::INTERNAL_IMPLEMENTATION,
+                affectedChecks: [CheckType::RETURN_TYPES],
+                versionRange: new PhpVersionRange(PhpVersions::EARLIEST, PhpVersions::LATEST),
+                reason: 'SimpleXML builds child and attribute nodes with the class of the node they are called on, so these return static; PHP declares SimpleXMLElement.',
+                entityIds: [
+                    '\\SimpleXMLElement::addChild',
+                    '\\SimpleXMLElement::attributes',
+                    '\\SimpleXMLElement::children',
+                    '\\SimpleXMLIterator::addChild',
+                    '\\SimpleXMLIterator::attributes',
+                    '\\SimpleXMLIterator::children',
+                ],
+            ),
+
+            // DateTime::modify() returns $this and DateTimeImmutable::modify() a clone of it
+            new ProblemDefinition(
+                entityType: EntityType::METHOD,
+                entityId: 'date-modify-static-returns',
+                type: ProblemType::INTERNAL_IMPLEMENTATION,
+                affectedChecks: [CheckType::RETURN_TYPES],
+                versionRange: new PhpVersionRange(PhpVersions::PHP_8_1, PhpVersions::PHP_8_3),
+                reason: 'modify() returns an object of the class it is called on, so the stubs return static (WI-80572); PHP declares DateTime and DateTimeImmutable.',
+                entityIds: ['\\DateTime::modify', '\\DateTimeImmutable::modify'],
+            ),
+
+            // PHP 8.6 declares static on these __set_state() methods, but still builds the base class
+            new ProblemDefinition(
+                entityType: EntityType::METHOD,
+                entityId: 'date-set-state-static-declarations',
+                type: ProblemType::INTERNAL_IMPLEMENTATION,
+                affectedChecks: [CheckType::RETURN_TYPES],
+                versionRange: new PhpVersionRange(PhpVersions::PHP_8_6, PhpVersions::LATEST),
+                reason: 'PHP 8.6 declares a tentative static return, but __set_state() still instantiates the base class when called on a subclass.',
+                entityIds: [
+                    '\\DateTimeImmutable::__set_state',
+                    '\\DateTimeZone::__set_state',
+                    '\\DateInterval::__set_state',
+                    '\\DatePeriod::__set_state',
+                ],
             ),
 
             // ── ClassMethodsParametersCountCheck known problems ───────────────────────
@@ -950,68 +991,6 @@ class DefaultKnownProblemsProvider implements KnownProblemsProvider
                 ],
             ),
 
-            // Normalizer - ICU-version-dependent constants (NFKC_CF, FORM_KC_CF, OPTION_DEFAULT)
-            new ProblemDefinition(
-                entityType: EntityType::CLASS_CONSTANT,
-                entityId: '\\Normalizer',
-                type: ProblemType::INTERNAL_IMPLEMENTATION,
-                affectedChecks: [CheckType::CLASS_CONSTANTS],
-                versionRange: new PhpVersionRange(PhpVersions::EARLIEST, PhpVersions::LATEST),
-                reason: 'Normalizer::NFKC_CF, FORM_KC_CF, and OPTION_DEFAULT depend on the ICU library version bundled with PHP. These constants require ICU 60+ and are absent from reflection when an older ICU is used.',
-                entityIds: [
-                    '\\Normalizer::NFKC_CF',
-                    '\\Normalizer::FORM_KC_CF',
-                    '\\Normalizer::OPTION_DEFAULT',
-                ],
-            ),
-
-            // NumberFormatter - CURRENCY_ACCOUNTING requires ICU 53+ (not present in PHP 5.6-7.3 builds)
-            new ProblemDefinition(
-                entityType: EntityType::CLASS_CONSTANT,
-                entityId: '\\NumberFormatter::CURRENCY_ACCOUNTING',
-                type: ProblemType::INTERNAL_IMPLEMENTATION,
-                affectedChecks: [CheckType::CLASS_CONSTANTS],
-                versionRange: new PhpVersionRange(PhpVersions::EARLIEST, PhpVersions::PHP_7_3),
-                reason: 'NumberFormatter::CURRENCY_ACCOUNTING requires ICU 53+. PHP 5.6-7.3 builds typically bundle an older ICU version that does not include this constant.',
-            ),
-
-            // IntlDateFormatter - RELATIVE_* constants require ICU 64+ (not present in PHP 5.6-8.3 builds)
-            new ProblemDefinition(
-                entityType: EntityType::CLASS_CONSTANT,
-                entityId: '\\IntlDateFormatter',
-                type: ProblemType::INTERNAL_IMPLEMENTATION,
-                affectedChecks: [CheckType::CLASS_CONSTANTS],
-                versionRange: new PhpVersionRange(PhpVersions::EARLIEST, PhpVersions::PHP_8_3),
-                reason: 'IntlDateFormatter::RELATIVE_FULL, RELATIVE_LONG, RELATIVE_MEDIUM, and RELATIVE_SHORT require ICU 64+. PHP builds before 8.4 typically bundle an older ICU version that does not include these constants.',
-                entityIds: [
-                    '\\IntlDateFormatter::RELATIVE_FULL',
-                    '\\IntlDateFormatter::RELATIVE_LONG',
-                    '\\IntlDateFormatter::RELATIVE_MEDIUM',
-                    '\\IntlDateFormatter::RELATIVE_SHORT',
-                    '\\IntlDateFormatter::PATTERN',
-                ],
-            ),
-
-            // Spoofchecker - ICU-dependent constants absent from PHP 5.6-8.2 builds
-            new ProblemDefinition(
-                entityType: EntityType::CLASS_CONSTANT,
-                entityId: '\\Spoofchecker',
-                type: ProblemType::INTERNAL_IMPLEMENTATION,
-                affectedChecks: [CheckType::CLASS_CONSTANTS],
-                versionRange: new PhpVersionRange(PhpVersions::EARLIEST, PhpVersions::PHP_8_2),
-                reason: 'Spoofchecker::ASCII, HIGHLY_RESTRICTIVE, MODERATELY_RESTRICTIVE, MINIMALLY_RESTRICTIVE, UNRESTRICTIVE, and SINGLE_SCRIPT_RESTRICTIVE depend on the ICU library version. These constants are absent from reflection in PHP 5.6-8.2 builds that bundle older ICU versions.',
-                entityIds: [
-                    '\\Spoofchecker::ASCII',
-                    '\\Spoofchecker::HIGHLY_RESTRICTIVE',
-                    '\\Spoofchecker::MODERATELY_RESTRICTIVE',
-                    '\\Spoofchecker::MINIMALLY_RESTRICTIVE',
-                    '\\Spoofchecker::UNRESTRICTIVE',
-                    '\\Spoofchecker::SINGLE_SCRIPT_RESTRICTIVE',
-                    '\\Spoofchecker::MIXED_NUMBERS',
-                    '\\Spoofchecker::HIDDEN_OVERLAY',
-                ],
-            ),
-
             // ZipArchive - libzip-version-dependent constants absent from PHP 8.0-8.2 builds
             new ProblemDefinition(
                 entityType: EntityType::CLASS_CONSTANT,
@@ -1086,7 +1065,6 @@ class DefaultKnownProblemsProvider implements KnownProblemsProvider
                     '\\LIBXML_VERSION',
                     '\\LIBXML_LOADED_VERSION',
                     '\\LIBXML_DOTTED_VERSION',
-                    '\\LIBXML_BIGLINES',
                 ],
             ),
 
@@ -1312,15 +1290,9 @@ class DefaultKnownProblemsProvider implements KnownProblemsProvider
                 type: ProblemType::RUNTIME_VALUE,
                 affectedChecks: [CheckType::CONSTANT_VALUE],
                 versionRange: new PhpVersionRange(PhpVersions::EARLIEST, PhpVersions::LATEST),
-                reason: 'cURL constants (debug-callback type flags, CURLVERSION_NOW, CURLINFO_LASTONE) depend on the linked libcurl version.',
+                reason: 'CURLVERSION_NOW and CURLINFO_LASTONE track the newest entry of the linked libcurl version.',
                 entityIds: [
-                    '\\CURLINFO_TEXT',
-                    '\\CURLINFO_DATA_IN',
-                    '\\CURLINFO_DATA_OUT',
-                    '\\CURLINFO_SSL_DATA_IN',
-                    '\\CURLINFO_SSL_DATA_OUT',
                     '\\CURLINFO_LASTONE',
-                    '\\CURLOPT_DEBUGFUNCTION',
                     '\\CURLVERSION_NOW',
                 ],
             ),
@@ -1385,26 +1357,6 @@ class DefaultKnownProblemsProvider implements KnownProblemsProvider
                     '\\ZLIB_VERSION',
                     '\\ZLIB_VERNUM',
                 ],
-            ),
-
-            // fileinfo/libmagic version
-            new ProblemDefinition(
-                entityType: EntityType::GLOBAL_CONSTANT,
-                entityId: '\\FILEINFO_EXTENSION',
-                type: ProblemType::RUNTIME_VALUE,
-                affectedChecks: [CheckType::CONSTANT_VALUE],
-                versionRange: new PhpVersionRange(PhpVersions::EARLIEST, PhpVersions::LATEST),
-                reason: 'FILEINFO_EXTENSION flag value depends on the libmagic version; only available since libmagic 5.34 and the numeric value varies.',
-            ),
-
-            // MySQL/MariaDB driver constant
-            new ProblemDefinition(
-                entityType: EntityType::GLOBAL_CONSTANT,
-                entityId: '\\MYSQLI_IS_MARIADB',
-                type: ProblemType::RUNTIME_VALUE,
-                affectedChecks: [CheckType::CONSTANT_VALUE],
-                versionRange: new PhpVersionRange(PhpVersions::EARLIEST, PhpVersions::LATEST),
-                reason: 'MYSQLI_IS_MARIADB is a boolean/truthy constant reported as an empty string by some MySQL builds and as 0 by others; its value depends on the MySQL/MariaDB driver.',
             ),
 
             // FFI::__BIGGEST_ALIGNMENT__ is CPU/ABI-dependent (8 on x86-64, 16 on some architectures)
@@ -1489,10 +1441,10 @@ class DefaultKnownProblemsProvider implements KnownProblemsProvider
                 type: ProblemType::RUNTIME_VALUE,
                 affectedChecks: [CheckType::CONSTANT_VALUE],
                 versionRange: new PhpVersionRange(PhpVersions::EARLIEST, PhpVersions::LATEST),
-                reason: 'PHP_DEBUG and PHP_ZTS depend on whether PHP was compiled with debug mode or ZTS support; value is 0 in standard builds but may be reported as empty string by reflection.',
+                reason: 'PHP_ZTS and ZEND_THREAD_SAFE depend on whether PHP was compiled with thread safety; the 8.6 image is a ZTS build.',
                 entityIds: [
-                    '\\PHP_DEBUG',
                     '\\PHP_ZTS',
+                    '\\ZEND_THREAD_SAFE',
                 ],
             ),
 

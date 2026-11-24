@@ -267,7 +267,7 @@ define('LIBXML_COMPACT', 65536);
  * @link https://php.net/manual/en/libxml.constants.php
  * @since 7.0
  */
-define('LIBXML_BIGLINES', 65535);
+define('LIBXML_BIGLINES', 4194304);
 
 /**
  * Drop the XML declaration when saving a document

@@ -11,10 +11,10 @@ class InterfaceConstantsValueCheckTest extends CheckTestCase
 {
     // ── supports() ────────────────────────────────────────────────────────────
 
-    public function testSupportsOnlyLatestVersion(): void
+    public function testSupportsAllVersions(): void
     {
         $check = new ClassConstantsValueCheck(entityTypeConfig: EntityTypeConfig::forInterface());
-        $this->assertFalse($check->supports(PhpVersions::PHP_5_6->value));
+        $this->assertTrue($check->supports(PhpVersions::PHP_5_6->value));
         $this->assertTrue($check->supports(PhpVersions::LATEST->value));
     }
 

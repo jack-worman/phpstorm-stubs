@@ -11,10 +11,10 @@ class EnumConstantsValueCheckTest extends CheckTestCase
 {
     // ── supports() ────────────────────────────────────────────────────────────
 
-    public function testSupportsOnlyLatestVersion(): void
+    public function testSupportsAllVersions(): void
     {
         $check = new ClassConstantsValueCheck(entityTypeConfig: EntityTypeConfig::forEnum());
-        $this->assertFalse($check->supports(PhpVersions::PHP_8_1->value));
+        $this->assertTrue($check->supports(PhpVersions::PHP_5_6->value));
         $this->assertTrue($check->supports(PhpVersions::LATEST->value));
     }
 
