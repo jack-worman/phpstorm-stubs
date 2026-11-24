@@ -136,8 +136,8 @@ function floor(int|float $num) {}
 function round(
     int|float $num,
     int $precision = 0,
-    #[PhpStormStubsElementAvailable(from: '5.3', to: '8.4')] #[LanguageLevelTypeAware(['8.4' => 'RoundingMode|int'], default: 'int')] $mode = 0,
-    #[PhpStormStubsElementAvailable(from: '8.5')] RoundingMode|int $mode = \RoundingMode::HalfAwayFromZero
+    #[PhpStormStubsElementAvailable(from: '5.3', to: '8.3')] int $mode = PHP_ROUND_HALF_UP,
+    #[PhpStormStubsElementAvailable(from: '8.4')] RoundingMode|int $mode = \RoundingMode::HalfAwayFromZero
 ): float {}
 
 /**

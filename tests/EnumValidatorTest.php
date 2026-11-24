@@ -89,7 +89,7 @@ class EnumValidatorTest extends ValidatorTestBase
             'checkEnumConstantsValue' => new CheckDescriptor(ClassConstantsValueCheck::class, PhpVersions::PHP_8_1, PhpVersions::LATEST, 'Enum {entityId} constants value check failed in PHP {phpVersion}', $e),
             'checkEnumMethodsParameterNames' => new CheckDescriptor(ClassMethodsParameterNamesCheck::class, PhpVersions::PHP_8_1, PhpVersions::LATEST, 'Enum {entityId} methods parameter names check failed in PHP {phpVersion}', $e),
             'checkEnumMethodsTentativeReturnType' => new CheckDescriptor(ClassMethodsTentativeReturnTypeCheck::class, PhpVersions::PHP_8_1, PhpVersions::LATEST, 'Enum {entityId} methods tentative return type check failed in PHP {phpVersion}', $e),
-            'checkEnumMethodsParameterDefaultValue' => new CheckDescriptor(ClassMethodsParameterDefaultValueCheck::class, PhpVersions::LATEST, PhpVersions::LATEST, 'Enum {entityId} methods parameter default value check failed in PHP {phpVersion}', $e),
+            'checkEnumMethodsParameterDefaultValue' => new CheckDescriptor(ClassMethodsParameterDefaultValueCheck::class, PhpVersions::PHP_8_1, PhpVersions::LATEST, 'Enum {entityId} methods parameter default value check failed in PHP {phpVersion}', $e),
             'checkEnumMethodsPhpDocConformsSignature' => new CheckDescriptor(ClassMethodsPhpDocConformsSignatureCheck::class, PhpVersions::PHP_8_1, PhpVersions::LATEST, 'Enum {entityId} PhpDoc/signature type mismatch in PHP {phpVersion}', $e)
         ];
     }

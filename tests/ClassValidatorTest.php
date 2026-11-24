@@ -114,7 +114,7 @@ class ClassValidatorTest extends ValidatorTestBase
             // definitions only apply because this range starts at 8.1.
             'checkClassMethodsTentativeReturnType' => new CheckDescriptor(ClassMethodsTentativeReturnTypeCheck::class, PhpVersions::PHP_8_1, PhpVersions::LATEST, 'Class {entityId} methods tentative return type check failed in PHP {phpVersion}'),
             'checkClassPropertyReadonly' => new CheckDescriptor(ClassPropertyReadonlyCheck::class, PhpVersions::PHP_8_1, PhpVersions::LATEST, 'Class {entityId} property readonly check failed in PHP {phpVersion}'),
-            'checkClassMethodsParameterDefaultValue' => new CheckDescriptor(ClassMethodsParameterDefaultValueCheck::class, PhpVersions::LATEST, PhpVersions::LATEST, 'Class {entityId} methods parameter default value check failed in PHP {phpVersion}'),
+            'checkClassMethodsParameterDefaultValue' => new CheckDescriptor(ClassMethodsParameterDefaultValueCheck::class, PhpVersions::PHP_8_0, PhpVersions::LATEST, 'Class {entityId} methods parameter default value check failed in PHP {phpVersion}'),
             'checkClassMethodsPhpDocConformsSignature' => new CheckDescriptor(ClassMethodsPhpDocConformsSignatureCheck::class, PhpVersions::EARLIEST, PhpVersions::LATEST, 'Class {entityId} PhpDoc/signature type mismatch in PHP {phpVersion}'),
             // Reflection API methods returning type information must include concrete subtypes
             // (ReflectionNamedType, ReflectionUnionType, ReflectionIntersectionType), not just ReflectionType.

@@ -32,10 +32,10 @@ class ClassMethodsParameterDefaultValueCheckTest extends CheckTestCase
 
     // ── supports() ────────────────────────────────────────────────────────────
 
-    public function testSupportsOnlyLatestPhpVersion(): void
+    public function testSupportsFromPhp80(): void
     {
-        $this->assertFalse($this->check->supports(PhpVersions::PHP_8_0->value));
-        $this->assertFalse($this->check->supports(PhpVersions::PHP_8_3->value));
+        $this->assertFalse($this->check->supports(PhpVersions::PHP_7_4->value));
+        $this->assertTrue($this->check->supports(PhpVersions::PHP_8_0->value));
         $this->assertTrue($this->check->supports(PhpVersions::LATEST->value));
     }
 

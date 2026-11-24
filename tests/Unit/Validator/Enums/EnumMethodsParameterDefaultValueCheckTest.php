@@ -18,9 +18,9 @@ class EnumMethodsParameterDefaultValueCheckTest extends CheckTestCase
         $this->check = new ClassMethodsParameterDefaultValueCheck(entityTypeConfig: EntityTypeConfig::forEnum());
     }
 
-    public function testSupportsOnlyLatestPhpVersion(): void
+    public function testSupportsFromPhp80(): void
     {
-        $this->assertFalse($this->check->supports(PhpVersions::PHP_8_1->value));
+        $this->assertTrue($this->check->supports(PhpVersions::PHP_8_1->value));
         $this->assertTrue($this->check->supports(PhpVersions::LATEST->value));
     }
 

@@ -6,15 +6,15 @@ use StubTests\Framework\Validator\AbstractMemberFlagCheck;
 use StubTests\Framework\Validator\Contracts\DescribesMethodMismatch;
 use StubTests\Framework\Validator\Contracts\MemberKind;
 use StubTests\Framework\Model\PHPMethod;
-use StubTests\Framework\Runner\PhpVersions;
 use StubTests\Framework\Validator\KnownProblems\CheckType;
 use StubTests\Framework\Validator\Services\ParameterDefaultValueComparator;
 
 /**
  * Validates that default parameter values in stub methods match those in reflection.
  *
- * Only runs against the latest PHP version since stubs do not support version-aware
- * default values (there is no LanguageLevelTypeAware equivalent for defaults).
+ * Runs from PHP 8.0, the first version whose reflection reports internal defaults. Below the
+ * latest version only declarations that end before it are compared (see
+ * ParameterDefaultValueComparator::filterComparableAt()).
  *
  * For each class identified by $entityId the validator:
  * 1. Iterates all methods reported by reflection.
@@ -40,7 +40,7 @@ class ClassMethodsParameterDefaultValueCheck extends AbstractMemberFlagCheck imp
 
     public function supports(string $phpVersion): bool
     {
-        return $phpVersion === PhpVersions::LATEST->value;
+        return version_compare($phpVersion, '8.0', '>=');
     }
 
     protected function getCheckName(): CheckType
@@ -59,6 +59,7 @@ class ClassMethodsParameterDefaultValueCheck extends AbstractMemberFlagCheck imp
             $stubParamsByName[$param->getName()] = $param;
         }
 
+        $stubParamsByName = ParameterDefaultValueComparator::filterComparableAt($stubParamsByName, $stubMethod, $phpVersion);
         $mismatches = ParameterDefaultValueComparator::buildMismatches($reflMethod->getParameters(), $stubParamsByName);
 
         if (empty($mismatches)) {

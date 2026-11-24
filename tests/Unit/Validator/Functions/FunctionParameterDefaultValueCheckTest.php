@@ -31,11 +31,49 @@ class FunctionParameterDefaultValueCheckTest extends CheckTestCase
 
     // ── supports() ────────────────────────────────────────────────────────────
 
-    public function testSupportsOnlyLatestPhpVersion(): void
+    public function testSupportsFromPhp80(): void
     {
-        $this->assertFalse($this->check->supports(PhpVersions::PHP_8_0->value));
-        $this->assertFalse($this->check->supports(PhpVersions::PHP_8_3->value));
+        $this->assertFalse($this->check->supports(PhpVersions::PHP_7_4->value));
+        $this->assertTrue($this->check->supports(PhpVersions::PHP_8_0->value));
         $this->assertTrue($this->check->supports(PhpVersions::LATEST->value));
+    }
+
+    /**
+     * round() declared `$mode = 0` up to 8.4 and RoundingMode from 8.5, so the 8.4 declaration
+     * never reached the latest version.
+     */
+    public function testDeclarationEndingBeforeLatestIsComparedBelowIt(): void
+    {
+        $fnId = '\round';
+        $reflFunc = $this->createMockFunction($fnId, [$this->makeParam('mode', hasDefaultValue: true, defaultValue: 1, optional: true)]);
+        $stubFunc = $this->createMockFunction($fnId, [
+            $this->makeParam('mode', sinceVersion: '5.3', removedVersion: '8.5', optional: true, hasDefaultValue: true, defaultValue: 0),
+            $this->makeParam('mode', sinceVersion: '8.5', optional: true, hasDefaultValue: true, defaultValue: '[object:RoundingMode]'),
+        ]);
+
+        $provider = $this->createMockReflectionProvider([$reflFunc], []);
+        $stubs = $this->createMockStorageManager();
+        $stubs->method('getFunctions')->willReturn([$stubFunc]);
+
+        $result = (new FunctionParameterDefaultValueCheck($provider))->run($stubs, $fnId, PhpVersions::PHP_8_3->value);
+
+        $this->assertTrue($result->hasFailures());
+        $this->assertStringContainsString("reflection '1', stubs '0'", $result->getFailures()[$fnId]);
+    }
+
+    public function testDeclarationReachingLatestIsOnlyComparedThere(): void
+    {
+        $fnId = '\sort';
+        $reflFunc = $this->createMockFunction($fnId, [$this->makeParam('flags', hasDefaultValue: true, defaultValue: 0, optional: true)]);
+        $stubFunc = $this->createMockFunction($fnId, [$this->makeParam('flags', hasDefaultValue: true, defaultValue: 4, optional: true)]);
+
+        $provider = $this->createMockReflectionProvider([$reflFunc], []);
+        $stubs = $this->createMockStorageManager();
+        $stubs->method('getFunctions')->willReturn([$stubFunc]);
+
+        $result = (new FunctionParameterDefaultValueCheck($provider))->run($stubs, $fnId, PhpVersions::PHP_8_3->value);
+
+        $this->assertFalse($result->hasFailures());
     }
 
     // ── Function not found ────────────────────────────────────────────────────
