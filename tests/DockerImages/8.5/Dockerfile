@@ -33,4 +33,15 @@ RUN docker-php-ext-configure pdo_odbc --with-pdo-odbc=unixODBC,/usr
 RUN docker-php-ext-install ffi enchant odbc tidy xsl zip gmp sockets intl gd ldap bz2 mysqli bcmath calendar dba exif \
     gettext pcntl pdo_mysql shmop sysvmsg sysvsem sysvshm xml soap pgsql pdo_pgsql ftp pdo_dblib pdo_odbc
 
+# The sqlsrv and pdo_sqlsrv 5.14.0 release is not on PECL, so this builds it from the GitHub release
+# tarballs. Both load without Microsoft's ODBC driver, which only a real connection needs.
+ARG SQLSRV_VERSION=5.14.0
+RUN set -eux; \
+    for ext in sqlsrv pdo_sqlsrv; do \
+        mkdir -p /usr/src/php/ext/$ext; \
+        curl -fsSL "https://github.com/microsoft/msphpsql/releases/download/v$SQLSRV_VERSION/$ext-v$SQLSRV_VERSION.tgz" \
+            | tar -xz -C /usr/src/php/ext/$ext; \
+    done; \
+    docker-php-ext-install sqlsrv pdo_sqlsrv
+
 WORKDIR /opt/project/phpstorm-stubs

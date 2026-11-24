@@ -887,22 +887,15 @@ class DefaultKnownProblemsProvider implements KnownProblemsProvider
                 reason: 'mysqli_sql_exception was made final in PHP 7.0. Stubs declare it final to match PHP 7.0+ behaviour; PHP 5.6 reflection reports non-final.'
             ),
 
-            // PDO - driver-specific constants not present in standard PHP builds
+            // PDO - pdo_sqlsrv constants, which only the 8.4+ images load
             new ProblemDefinition(
                 entityType: EntityType::CLASS_CONSTANT,
                 entityId: '\\PDO',
                 type: ProblemType::INTERNAL_IMPLEMENTATION,
                 affectedChecks: [CheckType::CLASS_CONSTANTS],
-                versionRange: new PhpVersionRange(PhpVersions::EARLIEST, PhpVersions::LATEST),
-                reason: 'PDO stubs include driver-specific constants (PGSQL_*, SQLSRV_*, OCI_*, FB_*) that are only available when the corresponding database driver extension is installed. These constants are absent from reflection in standard PHP builds without those drivers.',
+                versionRange: new PhpVersionRange(PhpVersions::EARLIEST, PhpVersions::PHP_8_3),
+                reason: 'pdo_sqlsrv adds the PDO::SQLSRV_* constants. The reflection images build it only for PHP 8.4 and later, the versions pdo_sqlsrv 5.14 supports.',
                 entityIds: [
-                    '\\PDO::PGSQL_ATTR_DISABLE_NATIVE_PREPARED_STATEMENT',
-                    '\\PDO::PGSQL_ATTR_DISABLE_PREPARES',
-                    '\\PDO::PGSQL_TRANSACTION_IDLE',
-                    '\\PDO::PGSQL_TRANSACTION_ACTIVE',
-                    '\\PDO::PGSQL_TRANSACTION_INTRANS',
-                    '\\PDO::PGSQL_TRANSACTION_INERROR',
-                    '\\PDO::PGSQL_TRANSACTION_UNKNOWN',
                     '\\PDO::SQLSRV_TXN_READ_UNCOMMITTED',
                     '\\PDO::SQLSRV_TXN_READ_COMMITTED',
                     '\\PDO::SQLSRV_TXN_REPEATABLE_READ',
@@ -936,6 +929,25 @@ class DefaultKnownProblemsProvider implements KnownProblemsProvider
                     '\\PDO::SQLSRV_CURSOR_DYNAMIC',
                     '\\PDO::SQLSRV_CURSOR_STATIC',
                     '\\PDO::SQLSRV_CURSOR_BUFFERED',
+                ],
+            ),
+
+            // PDO - driver-specific constants not present in standard PHP builds
+            new ProblemDefinition(
+                entityType: EntityType::CLASS_CONSTANT,
+                entityId: '\\PDO',
+                type: ProblemType::INTERNAL_IMPLEMENTATION,
+                affectedChecks: [CheckType::CLASS_CONSTANTS],
+                versionRange: new PhpVersionRange(PhpVersions::EARLIEST, PhpVersions::LATEST),
+                reason: 'PDO stubs include driver-specific constants (PGSQL_*, OCI_*, FB_*) that are only available when the corresponding database driver extension is installed. These constants are absent from reflection in standard PHP builds without those drivers.',
+                entityIds: [
+                    '\\PDO::PGSQL_ATTR_DISABLE_NATIVE_PREPARED_STATEMENT',
+                    '\\PDO::PGSQL_ATTR_DISABLE_PREPARES',
+                    '\\PDO::PGSQL_TRANSACTION_IDLE',
+                    '\\PDO::PGSQL_TRANSACTION_ACTIVE',
+                    '\\PDO::PGSQL_TRANSACTION_INTRANS',
+                    '\\PDO::PGSQL_TRANSACTION_INERROR',
+                    '\\PDO::PGSQL_TRANSACTION_UNKNOWN',
                     '\\PDO::OCI_ATTR_ACTION',
                     '\\PDO::OCI_ATTR_CLIENT_INFO',
                     '\\PDO::OCI_ATTR_CLIENT_IDENTIFIER',

@@ -32,4 +32,15 @@ RUN docker-php-ext-install ffi enchant odbc tidy xsl zip gmp sockets intl gd lda
     # imap and pspell are absent on purpose: PHP 8.4 unbundled them to PECL.
     # https://wiki.php.net/rfc/unbundle_imap_pspell_oci8
 
+# The sqlsrv and pdo_sqlsrv 5.14.0 release is not on PECL, so this builds it from the GitHub release
+# tarballs. Both load without Microsoft's ODBC driver, which only a real connection needs.
+ARG SQLSRV_VERSION=5.14.0
+RUN set -eux; \
+    for ext in sqlsrv pdo_sqlsrv; do \
+        mkdir -p /usr/src/php/ext/$ext; \
+        curl -fsSL "https://github.com/microsoft/msphpsql/releases/download/v$SQLSRV_VERSION/$ext-v$SQLSRV_VERSION.tgz" \
+            | tar -xz -C /usr/src/php/ext/$ext; \
+    done; \
+    docker-php-ext-install sqlsrv pdo_sqlsrv
+
 WORKDIR /opt/project/phpstorm-stubs

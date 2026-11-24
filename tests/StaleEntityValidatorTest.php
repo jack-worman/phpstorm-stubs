@@ -16,10 +16,11 @@ use StubTests\Framework\Validator\StaleEntityCheck;
  * their @since/@removed range claims.
  *
  * Unlike the other validator tests, this one iterates stubs entities rather than reflection data:
- * an entity that is only in the stubs is exactly what it looks for. Only entities from extensions
- * that ship with PHP are yielded, only for the versions their declarations claim, and only when
- * that version's reflection lacks them. A row for an entity reflection has could only pass, and
- * yielding one for every entity and version would only cost memory.
+ * an entity that is only in the stubs is exactly what it looks for. Only entities from judgeable
+ * extensions (see ExtensionPresenceService::isJudgeable()) are yielded, only for the versions their
+ * declarations claim, and only when that version's reflection lacks them. A row for an entity
+ * reflection has could only pass, and yielding one for every entity and version would only cost
+ * memory.
  */
 class StaleEntityValidatorTest extends ValidatorTestBase
 {
@@ -44,7 +45,7 @@ class StaleEntityValidatorTest extends ValidatorTestBase
             $declarationsById = [];
             foreach ($presence->entitiesOfKind($stubs, $lookupKind) as $entity) {
                 $entityId = $entity->getId();
-                if ($entityId !== null && $presence->shipsWithPhp($entity)) {
+                if ($entityId !== null && $presence->isJudgeable($entity)) {
                     $declarationsById[$entityId][] = $entity;
                 }
             }

@@ -165,6 +165,14 @@ class StaleEntityCheckTest extends CheckTestCase
         self::assertFalse($this->runFunctionCheck([$function, $sibling], [$this->makeFunction('\\redis_loaded')])->hasFailures());
     }
 
+    public function testPeclExtensionTheReflectionImagesBuildIsJudged(): void
+    {
+        $function = $this->stubFunction('\\sqlsrv_only_in_stubs', 'sqlsrv/sqlsrv.php');
+        $sibling = $this->stubFunction('\\sqlsrv_connect', 'sqlsrv/sqlsrv.php');
+
+        self::assertTrue($this->runFunctionCheck([$function, $sibling], [$this->makeFunction('\\sqlsrv_connect')])->hasFailures());
+    }
+
     public function testExternalExtensionIsJudged(): void
     {
         // EXTERNAL extensions (intl, gmp, sockets…) are built from the PHP source tree.

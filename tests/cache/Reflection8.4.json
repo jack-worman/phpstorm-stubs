@@ -64044,6 +64044,204 @@
                 "value": 4,
                 "visibility": "public",
                 "isFinal": false
+            },
+            {
+                "name": "SQLSRV_ATTR_ENCODING",
+                "value": 1000,
+                "visibility": "public",
+                "isFinal": false
+            },
+            {
+                "name": "SQLSRV_ATTR_QUERY_TIMEOUT",
+                "value": 1001,
+                "visibility": "public",
+                "isFinal": false
+            },
+            {
+                "name": "SQLSRV_ATTR_DIRECT_QUERY",
+                "value": 1002,
+                "visibility": "public",
+                "isFinal": false
+            },
+            {
+                "name": "SQLSRV_ATTR_CURSOR_SCROLL_TYPE",
+                "value": 1003,
+                "visibility": "public",
+                "isFinal": false
+            },
+            {
+                "name": "SQLSRV_ATTR_CLIENT_BUFFER_MAX_KB_SIZE",
+                "value": 1004,
+                "visibility": "public",
+                "isFinal": false
+            },
+            {
+                "name": "SQLSRV_ATTR_FETCHES_NUMERIC_TYPE",
+                "value": 1005,
+                "visibility": "public",
+                "isFinal": false
+            },
+            {
+                "name": "SQLSRV_ATTR_FETCHES_DATETIME_TYPE",
+                "value": 1006,
+                "visibility": "public",
+                "isFinal": false
+            },
+            {
+                "name": "SQLSRV_ATTR_FORMAT_DECIMALS",
+                "value": 1007,
+                "visibility": "public",
+                "isFinal": false
+            },
+            {
+                "name": "SQLSRV_ATTR_DECIMAL_PLACES",
+                "value": 1008,
+                "visibility": "public",
+                "isFinal": false
+            },
+            {
+                "name": "SQLSRV_ATTR_DATA_CLASSIFICATION",
+                "value": 1009,
+                "visibility": "public",
+                "isFinal": false
+            },
+            {
+                "name": "SQLSRV_ATTR_BATCH_ERROR_CONTINUE",
+                "value": 1010,
+                "visibility": "public",
+                "isFinal": false
+            },
+            {
+                "name": "SQLSRV_ATTR_PARAM_METADATA",
+                "value": 1011,
+                "visibility": "public",
+                "isFinal": false
+            },
+            {
+                "name": "SQLSRV_ATTR_DEFAULT_STR_LENGTH",
+                "value": 1012,
+                "visibility": "public",
+                "isFinal": false
+            },
+            {
+                "name": "SQLSRV_PARAM_DECLARED_STR_TYPE",
+                "value": 1013,
+                "visibility": "public",
+                "isFinal": false
+            },
+            {
+                "name": "SQLSRV_PARAM_DECLARED_STR_LENGTH",
+                "value": 1014,
+                "visibility": "public",
+                "isFinal": false
+            },
+            {
+                "name": "SQLSRV_PARAM_DECLARED_STR_TYPE_VARCHAR",
+                "value": 12,
+                "visibility": "public",
+                "isFinal": false
+            },
+            {
+                "name": "SQLSRV_PARAM_DECLARED_STR_TYPE_NVARCHAR",
+                "value": -9,
+                "visibility": "public",
+                "isFinal": false
+            },
+            {
+                "name": "SQLSRV_PARAM_DECLARED_STR_LENGTH_MAX",
+                "value": -1,
+                "visibility": "public",
+                "isFinal": false
+            },
+            {
+                "name": "SQLSRV_PARAM_OUT_DEFAULT_SIZE",
+                "value": -1,
+                "visibility": "public",
+                "isFinal": false
+            },
+            {
+                "name": "SQLSRV_ENCODING_DEFAULT",
+                "value": 1,
+                "visibility": "public",
+                "isFinal": false
+            },
+            {
+                "name": "SQLSRV_ENCODING_SYSTEM",
+                "value": 3,
+                "visibility": "public",
+                "isFinal": false
+            },
+            {
+                "name": "SQLSRV_ENCODING_BINARY",
+                "value": 2,
+                "visibility": "public",
+                "isFinal": false
+            },
+            {
+                "name": "SQLSRV_ENCODING_UTF8",
+                "value": 65001,
+                "visibility": "public",
+                "isFinal": false
+            },
+            {
+                "name": "SQLSRV_ENCODING_UTF8_VARCHAR",
+                "value": 65002,
+                "visibility": "public",
+                "isFinal": false
+            },
+            {
+                "name": "SQLSRV_CURSOR_STATIC",
+                "value": 3,
+                "visibility": "public",
+                "isFinal": false
+            },
+            {
+                "name": "SQLSRV_CURSOR_DYNAMIC",
+                "value": 2,
+                "visibility": "public",
+                "isFinal": false
+            },
+            {
+                "name": "SQLSRV_CURSOR_KEYSET",
+                "value": 1,
+                "visibility": "public",
+                "isFinal": false
+            },
+            {
+                "name": "SQLSRV_CURSOR_BUFFERED",
+                "value": 42,
+                "visibility": "public",
+                "isFinal": false
+            },
+            {
+                "name": "SQLSRV_TXN_READ_UNCOMMITTED",
+                "value": "READ_UNCOMMITTED",
+                "visibility": "public",
+                "isFinal": false
+            },
+            {
+                "name": "SQLSRV_TXN_READ_COMMITTED",
+                "value": "READ_COMMITTED",
+                "visibility": "public",
+                "isFinal": false
+            },
+            {
+                "name": "SQLSRV_TXN_REPEATABLE_READ",
+                "value": "REPEATABLE_READ",
+                "visibility": "public",
+                "isFinal": false
+            },
+            {
+                "name": "SQLSRV_TXN_SERIALIZABLE",
+                "value": "SERIALIZABLE",
+                "visibility": "public",
+                "isFinal": false
+            },
+            {
+                "name": "SQLSRV_TXN_SNAPSHOT",
+                "value": "SNAPSHOT",
+                "visibility": "public",
+                "isFinal": false
             }
         ],
         "parentClass": null,
@@ -186760,6 +186958,1029 @@
     },
     {
         "_type": "PHPFunction",
+        "name": "sqlsrv_connect",
+        "id": "\\sqlsrv_connect",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "server_name",
+                "position": 0,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            },
+            {
+                "name": "connection_info",
+                "position": 1,
+                "isOptional": true,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "array",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
+        "name": "sqlsrv_close",
+        "id": "\\sqlsrv_close",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "conn",
+                "position": 0,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
+        "name": "sqlsrv_commit",
+        "id": "\\sqlsrv_commit",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "conn",
+                "position": 0,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
+        "name": "sqlsrv_begin_transaction",
+        "id": "\\sqlsrv_begin_transaction",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "conn",
+                "position": 0,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
+        "name": "sqlsrv_rollback",
+        "id": "\\sqlsrv_rollback",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "conn",
+                "position": 0,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
+        "name": "sqlsrv_errors",
+        "id": "\\sqlsrv_errors",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "errors_and_or_warnings",
+                "position": 0,
+                "isOptional": true,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
+        "name": "sqlsrv_configure",
+        "id": "\\sqlsrv_configure",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "setting",
+                "position": 0,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            },
+            {
+                "name": "value",
+                "position": 1,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
+        "name": "sqlsrv_get_config",
+        "id": "\\sqlsrv_get_config",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "setting",
+                "position": 0,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
+        "name": "sqlsrv_prepare",
+        "id": "\\sqlsrv_prepare",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "conn",
+                "position": 0,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            },
+            {
+                "name": "tsql",
+                "position": 1,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            },
+            {
+                "name": "params",
+                "position": 2,
+                "isOptional": true,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            },
+            {
+                "name": "options",
+                "position": 3,
+                "isOptional": true,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
+        "name": "sqlsrv_execute",
+        "id": "\\sqlsrv_execute",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "stmt",
+                "position": 0,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
+        "name": "sqlsrv_query",
+        "id": "\\sqlsrv_query",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "conn",
+                "position": 0,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            },
+            {
+                "name": "tsql",
+                "position": 1,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            },
+            {
+                "name": "params",
+                "position": 2,
+                "isOptional": true,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            },
+            {
+                "name": "options",
+                "position": 3,
+                "isOptional": true,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
+        "name": "sqlsrv_fetch",
+        "id": "\\sqlsrv_fetch",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "stmt",
+                "position": 0,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            },
+            {
+                "name": "row",
+                "position": 1,
+                "isOptional": true,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            },
+            {
+                "name": "offset",
+                "position": 2,
+                "isOptional": true,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
+        "name": "sqlsrv_get_field",
+        "id": "\\sqlsrv_get_field",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "stmt",
+                "position": 0,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            },
+            {
+                "name": "field_index",
+                "position": 1,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            },
+            {
+                "name": "get_as_type",
+                "position": 2,
+                "isOptional": true,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
+        "name": "sqlsrv_fetch_array",
+        "id": "\\sqlsrv_fetch_array",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "stmt",
+                "position": 0,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            },
+            {
+                "name": "fetch_type",
+                "position": 1,
+                "isOptional": true,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            },
+            {
+                "name": "row",
+                "position": 2,
+                "isOptional": true,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            },
+            {
+                "name": "offset",
+                "position": 3,
+                "isOptional": true,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
+        "name": "sqlsrv_fetch_object",
+        "id": "\\sqlsrv_fetch_object",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "stmt",
+                "position": 0,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            },
+            {
+                "name": "class_name",
+                "position": 1,
+                "isOptional": true,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            },
+            {
+                "name": "ctor_params",
+                "position": 2,
+                "isOptional": true,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            },
+            {
+                "name": "row",
+                "position": 3,
+                "isOptional": true,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            },
+            {
+                "name": "offset",
+                "position": 4,
+                "isOptional": true,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
+        "name": "sqlsrv_has_rows",
+        "id": "\\sqlsrv_has_rows",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "stmt",
+                "position": 0,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
+        "name": "sqlsrv_num_fields",
+        "id": "\\sqlsrv_num_fields",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "stmt",
+                "position": 0,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
+        "name": "sqlsrv_next_result",
+        "id": "\\sqlsrv_next_result",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "stmt",
+                "position": 0,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
+        "name": "sqlsrv_num_rows",
+        "id": "\\sqlsrv_num_rows",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "stmt",
+                "position": 0,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
+        "name": "sqlsrv_rows_affected",
+        "id": "\\sqlsrv_rows_affected",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "stmt",
+                "position": 0,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
+        "name": "SQLSRV_PHPTYPE_STREAM",
+        "id": "\\SQLSRV_PHPTYPE_STREAM",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "encoding",
+                "position": 0,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
+        "name": "SQLSRV_PHPTYPE_STRING",
+        "id": "\\SQLSRV_PHPTYPE_STRING",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "encoding",
+                "position": 0,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
+        "name": "sqlsrv_client_info",
+        "id": "\\sqlsrv_client_info",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "conn",
+                "position": 0,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
+        "name": "sqlsrv_server_info",
+        "id": "\\sqlsrv_server_info",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "stmt",
+                "position": 0,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
+        "name": "sqlsrv_cancel",
+        "id": "\\sqlsrv_cancel",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "stmt",
+                "position": 0,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
+        "name": "sqlsrv_free_stmt",
+        "id": "\\sqlsrv_free_stmt",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "stmt",
+                "position": 0,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
+        "name": "sqlsrv_field_metadata",
+        "id": "\\sqlsrv_field_metadata",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "stmt",
+                "position": 0,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
+        "name": "sqlsrv_send_stream_data",
+        "id": "\\sqlsrv_send_stream_data",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "stmt",
+                "position": 0,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
+        "name": "SQLSRV_SQLTYPE_BINARY",
+        "id": "\\SQLSRV_SQLTYPE_BINARY",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "size",
+                "position": 0,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
+        "name": "SQLSRV_SQLTYPE_CHAR",
+        "id": "\\SQLSRV_SQLTYPE_CHAR",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "size",
+                "position": 0,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
+        "name": "SQLSRV_SQLTYPE_DECIMAL",
+        "id": "\\SQLSRV_SQLTYPE_DECIMAL",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "precision",
+                "position": 0,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            },
+            {
+                "name": "scale",
+                "position": 1,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
+        "name": "SQLSRV_SQLTYPE_NCHAR",
+        "id": "\\SQLSRV_SQLTYPE_NCHAR",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "size",
+                "position": 0,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
+        "name": "SQLSRV_SQLTYPE_NUMERIC",
+        "id": "\\SQLSRV_SQLTYPE_NUMERIC",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "precision",
+                "position": 0,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            },
+            {
+                "name": "scale",
+                "position": 1,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
+        "name": "SQLSRV_SQLTYPE_NVARCHAR",
+        "id": "\\SQLSRV_SQLTYPE_NVARCHAR",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "size",
+                "position": 0,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
+        "name": "SQLSRV_SQLTYPE_VARBINARY",
+        "id": "\\SQLSRV_SQLTYPE_VARBINARY",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "size",
+                "position": 0,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
+        "name": "SQLSRV_SQLTYPE_VARCHAR",
+        "id": "\\SQLSRV_SQLTYPE_VARCHAR",
+        "namespace": "\\",
+        "isDeprecated": false,
+        "returnType": "",
+        "hasTentativeReturnType": false,
+        "parameters": [
+            {
+                "name": "size",
+                "position": 0,
+                "isOptional": false,
+                "isVariadic": false,
+                "isPassedByReference": false,
+                "isDeprecated": false,
+                "hasDefaultValue": false,
+                "type": "",
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "_type": "PHPFunction",
         "name": "msg_get_queue",
         "id": "\\msg_get_queue",
         "namespace": "\\",
@@ -209065,6 +210286,545 @@
         "name": "SODIUM_CRYPTO_CORE_RISTRETTO255_NONREDUCEDSCALARBYTES",
         "id": "\\SODIUM_CRYPTO_CORE_RISTRETTO255_NONREDUCEDSCALARBYTES",
         "value": 64,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_ERR_ERRORS",
+        "id": "\\SQLSRV_ERR_ERRORS",
+        "value": 0,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_ERR_WARNINGS",
+        "id": "\\SQLSRV_ERR_WARNINGS",
+        "value": 1,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_ERR_ALL",
+        "id": "\\SQLSRV_ERR_ALL",
+        "value": 2,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_LOG_SYSTEM_OFF",
+        "id": "\\SQLSRV_LOG_SYSTEM_OFF",
+        "value": 0,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_LOG_SYSTEM_INIT",
+        "id": "\\SQLSRV_LOG_SYSTEM_INIT",
+        "value": 1,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_LOG_SYSTEM_CONN",
+        "id": "\\SQLSRV_LOG_SYSTEM_CONN",
+        "value": 2,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_LOG_SYSTEM_STMT",
+        "id": "\\SQLSRV_LOG_SYSTEM_STMT",
+        "value": 4,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_LOG_SYSTEM_UTIL",
+        "id": "\\SQLSRV_LOG_SYSTEM_UTIL",
+        "value": 8,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_LOG_SYSTEM_ALL",
+        "id": "\\SQLSRV_LOG_SYSTEM_ALL",
+        "value": -1,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_LOG_SEVERITY_ERROR",
+        "id": "\\SQLSRV_LOG_SEVERITY_ERROR",
+        "value": 1,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_LOG_SEVERITY_WARNING",
+        "id": "\\SQLSRV_LOG_SEVERITY_WARNING",
+        "value": 2,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_LOG_SEVERITY_NOTICE",
+        "id": "\\SQLSRV_LOG_SEVERITY_NOTICE",
+        "value": 4,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_LOG_SEVERITY_ALL",
+        "id": "\\SQLSRV_LOG_SEVERITY_ALL",
+        "value": -1,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_FETCH_NUMERIC",
+        "id": "\\SQLSRV_FETCH_NUMERIC",
+        "value": 1,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_FETCH_ASSOC",
+        "id": "\\SQLSRV_FETCH_ASSOC",
+        "value": 2,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_FETCH_BOTH",
+        "id": "\\SQLSRV_FETCH_BOTH",
+        "value": 3,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_PHPTYPE_NULL",
+        "id": "\\SQLSRV_PHPTYPE_NULL",
+        "value": 1,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_PHPTYPE_INT",
+        "id": "\\SQLSRV_PHPTYPE_INT",
+        "value": 2,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_PHPTYPE_FLOAT",
+        "id": "\\SQLSRV_PHPTYPE_FLOAT",
+        "value": 3,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_PHPTYPE_DATETIME",
+        "id": "\\SQLSRV_PHPTYPE_DATETIME",
+        "value": 5,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_PHPTYPE_TABLE",
+        "id": "\\SQLSRV_PHPTYPE_TABLE",
+        "value": 7,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_ENC_BINARY",
+        "id": "\\SQLSRV_ENC_BINARY",
+        "value": "binary",
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_ENC_CHAR",
+        "id": "\\SQLSRV_ENC_CHAR",
+        "value": "char",
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_ENC_UTF8_VARCHAR",
+        "id": "\\SQLSRV_ENC_UTF8_VARCHAR",
+        "value": "utf-8-varchar",
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_NULLABLE_NO",
+        "id": "\\SQLSRV_NULLABLE_NO",
+        "value": 0,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_NULLABLE_YES",
+        "id": "\\SQLSRV_NULLABLE_YES",
+        "value": 1,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_NULLABLE_UNKNOWN",
+        "id": "\\SQLSRV_NULLABLE_UNKNOWN",
+        "value": 2,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SQLTYPE_BIGINT",
+        "id": "\\SQLSRV_SQLTYPE_BIGINT",
+        "value": -5,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SQLTYPE_BIT",
+        "id": "\\SQLSRV_SQLTYPE_BIT",
+        "value": -7,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SQLTYPE_DATETIME",
+        "id": "\\SQLSRV_SQLTYPE_DATETIME",
+        "value": 25177693,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SQLTYPE_FLOAT",
+        "id": "\\SQLSRV_SQLTYPE_FLOAT",
+        "value": 6,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SQLTYPE_IMAGE",
+        "id": "\\SQLSRV_SQLTYPE_IMAGE",
+        "value": -4,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SQLTYPE_INT",
+        "id": "\\SQLSRV_SQLTYPE_INT",
+        "value": 4,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SQLTYPE_MONEY",
+        "id": "\\SQLSRV_SQLTYPE_MONEY",
+        "value": 33564163,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SQLTYPE_NTEXT",
+        "id": "\\SQLSRV_SQLTYPE_NTEXT",
+        "value": -10,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SQLTYPE_TEXT",
+        "id": "\\SQLSRV_SQLTYPE_TEXT",
+        "value": -1,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SQLTYPE_REAL",
+        "id": "\\SQLSRV_SQLTYPE_REAL",
+        "value": 7,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SQLTYPE_SMALLDATETIME",
+        "id": "\\SQLSRV_SQLTYPE_SMALLDATETIME",
+        "value": 8285,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SQLTYPE_SMALLINT",
+        "id": "\\SQLSRV_SQLTYPE_SMALLINT",
+        "value": 5,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SQLTYPE_SMALLMONEY",
+        "id": "\\SQLSRV_SQLTYPE_SMALLMONEY",
+        "value": 33559555,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SQLTYPE_TIMESTAMP",
+        "id": "\\SQLSRV_SQLTYPE_TIMESTAMP",
+        "value": 4606,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SQLTYPE_TINYINT",
+        "id": "\\SQLSRV_SQLTYPE_TINYINT",
+        "value": -6,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SQLTYPE_UDT",
+        "id": "\\SQLSRV_SQLTYPE_UDT",
+        "value": -151,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SQLTYPE_TABLE",
+        "id": "\\SQLSRV_SQLTYPE_TABLE",
+        "value": -153,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SQLTYPE_UNIQUEIDENTIFIER",
+        "id": "\\SQLSRV_SQLTYPE_UNIQUEIDENTIFIER",
+        "value": -11,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SQLTYPE_XML",
+        "id": "\\SQLSRV_SQLTYPE_XML",
+        "value": -152,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SQLTYPE_DATE",
+        "id": "\\SQLSRV_SQLTYPE_DATE",
+        "value": 5211,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SQLTYPE_TIME",
+        "id": "\\SQLSRV_SQLTYPE_TIME",
+        "value": 58728806,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SQLTYPE_DATETIMEOFFSET",
+        "id": "\\SQLSRV_SQLTYPE_DATETIMEOFFSET",
+        "value": 58738021,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SQLTYPE_DATETIME2",
+        "id": "\\SQLSRV_SQLTYPE_DATETIME2",
+        "value": 58734173,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SQLTYPE_DECIMAL",
+        "id": "\\SQLSRV_SQLTYPE_DECIMAL",
+        "value": 3,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SQLTYPE_NUMERIC",
+        "id": "\\SQLSRV_SQLTYPE_NUMERIC",
+        "value": 2,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SQLTYPE_CHAR",
+        "id": "\\SQLSRV_SQLTYPE_CHAR",
+        "value": 1,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SQLTYPE_NCHAR",
+        "id": "\\SQLSRV_SQLTYPE_NCHAR",
+        "value": -8,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SQLTYPE_VARCHAR",
+        "id": "\\SQLSRV_SQLTYPE_VARCHAR",
+        "value": 12,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SQLTYPE_NVARCHAR",
+        "id": "\\SQLSRV_SQLTYPE_NVARCHAR",
+        "value": -9,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SQLTYPE_BINARY",
+        "id": "\\SQLSRV_SQLTYPE_BINARY",
+        "value": -2,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SQLTYPE_VARBINARY",
+        "id": "\\SQLSRV_SQLTYPE_VARBINARY",
+        "value": -3,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_PARAM_IN",
+        "id": "\\SQLSRV_PARAM_IN",
+        "value": 1,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_PARAM_OUT",
+        "id": "\\SQLSRV_PARAM_OUT",
+        "value": 4,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_PARAM_INOUT",
+        "id": "\\SQLSRV_PARAM_INOUT",
+        "value": 2,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_TXN_READ_UNCOMMITTED",
+        "id": "\\SQLSRV_TXN_READ_UNCOMMITTED",
+        "value": 1,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_TXN_READ_COMMITTED",
+        "id": "\\SQLSRV_TXN_READ_COMMITTED",
+        "value": 2,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_TXN_REPEATABLE_READ",
+        "id": "\\SQLSRV_TXN_REPEATABLE_READ",
+        "value": 4,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_TXN_SERIALIZABLE",
+        "id": "\\SQLSRV_TXN_SERIALIZABLE",
+        "value": 8,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_TXN_SNAPSHOT",
+        "id": "\\SQLSRV_TXN_SNAPSHOT",
+        "value": 32,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SCROLL_NEXT",
+        "id": "\\SQLSRV_SCROLL_NEXT",
+        "value": 1,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SCROLL_PRIOR",
+        "id": "\\SQLSRV_SCROLL_PRIOR",
+        "value": 4,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SCROLL_FIRST",
+        "id": "\\SQLSRV_SCROLL_FIRST",
+        "value": 2,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SCROLL_LAST",
+        "id": "\\SQLSRV_SCROLL_LAST",
+        "value": 3,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SCROLL_ABSOLUTE",
+        "id": "\\SQLSRV_SCROLL_ABSOLUTE",
+        "value": 5,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_SCROLL_RELATIVE",
+        "id": "\\SQLSRV_SCROLL_RELATIVE",
+        "value": 6,
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_CURSOR_FORWARD",
+        "id": "\\SQLSRV_CURSOR_FORWARD",
+        "value": "forward",
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_CURSOR_STATIC",
+        "id": "\\SQLSRV_CURSOR_STATIC",
+        "value": "static",
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_CURSOR_DYNAMIC",
+        "id": "\\SQLSRV_CURSOR_DYNAMIC",
+        "value": "dynamic",
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_CURSOR_KEYSET",
+        "id": "\\SQLSRV_CURSOR_KEYSET",
+        "value": "keyset",
+        "namespace": "\\"
+    },
+    {
+        "_type": "PHPConstant",
+        "name": "SQLSRV_CURSOR_CLIENT_BUFFERED",
+        "id": "\\SQLSRV_CURSOR_CLIENT_BUFFERED",
+        "value": "buffered",
         "namespace": "\\"
     },
     {

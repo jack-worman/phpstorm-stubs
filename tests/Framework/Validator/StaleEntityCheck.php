@@ -28,7 +28,8 @@ use StubTests\Framework\Validator\Services\ExtensionPresenceService;
  * Two restrictions keep the signal usable:
  *
  * 1. **Extensions built from the PHP source tree only** ({@see ExtensionPresenceService::JUDGEABLE_CATEGORIES}).
- *    PECL and third-party stubs say nothing about PHP.
+ *    PECL and third-party stubs say nothing about PHP, except for the PECL extensions the reflection
+ *    images build ({@see ExtensionPresenceService::JUDGEABLE_PECL_DIRECTORIES}).
  * 2. **Only versions in which the entity's extension is loaded.** An extension counts as loaded
  *    when any entity from its stub directory exists in that version's reflection; see
  *    ExtensionPresenceService. This drops snmp, com_dotnet and the SAPI directories, and the
@@ -80,11 +81,11 @@ class StaleEntityCheck extends AbstractReflectionCheck
             return $results;
         }
 
-        // Only declarations that ship with PHP and claim this version are judged; a version-split
-        // entity is available when any of its declarations is.
+        // Only judgeable declarations that claim this version are judged; a version-split entity is
+        // available when any of its declarations is.
         $directories = [];
         foreach ($this->extensionPresence->findDeclarations($stubs, $this->lookupKind, $entityId) as $declaration) {
-            if (!$this->extensionPresence->shipsWithPhp($declaration)) {
+            if (!$this->extensionPresence->isJudgeable($declaration)) {
                 continue;
             }
             if (!($declaration->getStubsMetadata()?->isAvailableIn($phpVersion) ?? true)) {

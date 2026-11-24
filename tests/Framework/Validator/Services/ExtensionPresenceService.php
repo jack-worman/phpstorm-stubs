@@ -27,6 +27,9 @@ class ExtensionPresenceService
     /** The stub categories built from the PHP source tree, and so judgeable against reflection. */
     public const JUDGEABLE_CATEGORIES = [StubCategory::CORE, StubCategory::BUNDLED, StubCategory::EXTERNAL];
 
+    /** The PECL extensions the reflection images build, which are judged like the PHP source tree's. */
+    public const JUDGEABLE_PECL_DIRECTORIES = ['sqlsrv'];
+
     /** @var \WeakMap<StubDataQueryInterface, array<string, mixed>>|null */
     private static ?\WeakMap $cache = null;
 
@@ -49,14 +52,18 @@ class ExtensionPresenceService
     }
 
     /**
-     * Is the entity part of the PHP source tree, rather than a PECL or third-party extension?
+     * Is the entity part of the PHP source tree or of a PECL extension the reflection images build?
      */
-    public function shipsWithPhp(BasePHPElement $entity): bool
+    public function isJudgeable(BasePHPElement $entity): bool
     {
         $directory = $this->getDirectory($entity);
         if ($directory === null) {
-            // No recorded source — cannot establish that it ships with PHP, so do not judge it.
+            // No recorded source — cannot establish where it comes from, so do not judge it.
             return false;
+        }
+
+        if (in_array($directory, self::JUDGEABLE_PECL_DIRECTORIES, true)) {
+            return true;
         }
 
         foreach (self::JUDGEABLE_CATEGORIES as $category) {
