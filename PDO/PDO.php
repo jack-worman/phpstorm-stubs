@@ -1363,8 +1363,10 @@ namespace {
             #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $type = PDO::PARAM_STR
         ): string|false {}
 
+        #[PhpStormStubsElementAvailable(from: '5.3', to: '7.3')]
         final public function __wakeup() {}
 
+        #[PhpStormStubsElementAvailable(from: '5.3', to: '7.3')]
         final public function __sleep() {}
 
         /**
@@ -2103,8 +2105,10 @@ namespace {
         #[TentativeType]
         public function debugDumpParams(): ?bool {}
 
+        #[PhpStormStubsElementAvailable(from: '5.3', to: '7.3')]
         final public function __wakeup() {}
 
+        #[PhpStormStubsElementAvailable(from: '5.3', to: '7.3')]
         final public function __sleep() {}
 
         /**
@@ -2114,8 +2118,6 @@ namespace {
          * @since 8.0
          */
         public function getIterator(): Iterator {}
-
-        public function connect() {}
     }
 
     /**

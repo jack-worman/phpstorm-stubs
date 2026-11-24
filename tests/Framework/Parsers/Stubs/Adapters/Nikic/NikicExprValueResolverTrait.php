@@ -23,6 +23,13 @@ trait NikicExprValueResolverTrait
         if ($expr instanceof \PhpParser\Node\Scalar\Float_) {
             return $expr->value;
         }
+        if ($expr instanceof \PhpParser\Node\Expr\ConstFetch) {
+            return match ($expr->name->toLowerString()) {
+                'true' => true,
+                'false' => false,
+                default => null,
+            };
+        }
         if ($expr instanceof \PhpParser\Node\Expr\UnaryMinus) {
             if ($expr->expr instanceof \PhpParser\Node\Scalar\Int_) {
                 return -$expr->expr->value;

@@ -4386,7 +4386,7 @@ define('CURLOPT_SERVER_RESPONSE_TIMEOUT', 112);
 /**
  * @since 8.4
  */
-define('CURLOPT_DEBUGFUNCTION', 1);
+define('CURLOPT_DEBUGFUNCTION', 20094);
 
 /**
  * @since 8.4
@@ -4418,12 +4418,12 @@ define('CURLINFO_DATA_OUT', 4);
 /**
  * @since 8.4
  */
-define('CURLINFO_SSL_DATA_OUT', 5);
+define('CURLINFO_SSL_DATA_OUT', 6);
 
 /**
  * @since 8.4
  */
-define('CURLINFO_SSL_DATA_IN', 6);
+define('CURLINFO_SSL_DATA_IN', 5);
 
 /**
  * @since 8.4

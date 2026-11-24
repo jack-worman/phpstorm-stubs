@@ -189,6 +189,22 @@ class StubGlobalConstantParserTest extends BaseTestCase
         self::assertEquals(3.14, $constants[0]->getValue());
     }
 
+    public function testDefineItParsesBooleanValues()
+    {
+        $stubCode = '<?php define("TRUE_DEFINE", true); define("FALSE_DEFINE", FALSE);';
+        $constants = $this->defineParser->parse($stubCode);
+
+        self::assertTrue($constants[0]->getValue());
+        self::assertFalse($constants[1]->getValue());
+    }
+
+    public function testModernItParsesBooleanValue()
+    {
+        $constants = $this->modernParser->parse('<?php const BOOL_CONST = false;');
+
+        self::assertFalse($constants[0]->getValue());
+    }
+
     public function testDefineItIgnoresModernConstants()
     {
         $stubCode = '<?php const NEW_CONST = 1; define("OLD_DEFINE", 2);';

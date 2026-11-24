@@ -259,7 +259,7 @@ define('FILEINFO_RAW', 256);
  * For unknown types not available in the magic.mime database, then return value is "???". Available since PHP 7.2.0.
  * @since 7.2
  */
-define('FILEINFO_EXTENSION', 2097152);
+define('FILEINFO_EXTENSION', 16777216);
 
 /**
  * @since 8.2

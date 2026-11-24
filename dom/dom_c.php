@@ -307,7 +307,10 @@ class DOMNode
      * @link https://php.net/manual/en/domnode.comparedocumentposition.php
      * @return int A bitmask of the DOMNode::DOCUMENT_POSITION_* constants.
      */
-    #[LanguageLevelTypeAware(['8.4' => 'int'], default: '')]
+    #[PhpStormStubsElementAvailable(from: '8.4')]
+    public function compareDocumentPosition(DOMNode $other): int {}
+
+    #[PhpStormStubsElementAvailable(from: '5.3', to: '7.4')]
     public function compareDocumentPosition(DOMNode $other) {}
 
     /**
@@ -373,8 +376,11 @@ class DOMNode
      * @param DOMNode|null $otherNode The node.
      * @return bool Returns true if both nodes are equal, false otherwise.
      */
-    #[LanguageLevelTypeAware(['8.3' => 'bool'], default: '')]
-    public function isEqualNode(#[LanguageLevelTypeAware(['8.3' => 'DOMNode|null'], default: 'DOMNode')] $otherNode) {}
+    #[PhpStormStubsElementAvailable(from: '8.3')]
+    public function isEqualNode(?DOMNode $otherNode): bool {}
+
+    #[PhpStormStubsElementAvailable(from: '5.3', to: '7.4')]
+    public function isEqualNode(DOMNode $otherNode) {}
 
     /**
      * @removed 8.0

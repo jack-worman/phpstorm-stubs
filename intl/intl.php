@@ -506,6 +506,9 @@ class Collator
  */
 class NumberFormatter
 {
+    /**
+     * @since 7.4
+     */
     public const CURRENCY_ACCOUNTING = 12;
 
     /**
@@ -1322,14 +1325,15 @@ class NumberFormatter
  */
 class Normalizer
 {
+    /**
+     * @since 7.3
+     */
     public const NFKC_CF = 48;
-    public const FORM_KC_CF = 48;
 
     /**
-     * Default normalization options
-     * @link https://php.net/manual/en/class.normalizer.php
+     * @since 7.3
      */
-    public const OPTION_DEFAULT = "";
+    public const FORM_KC_CF = 48;
 
     /**
      * No decomposition/composition
@@ -2105,10 +2109,30 @@ class IntlDateFormatter
      * @since 8.6
      */
     public const PROLEPTIC_GREGORIAN = -16;
+
+    /**
+     * @since 8.0
+     */
     public const RELATIVE_FULL = 128;
+
+    /**
+     * @since 8.0
+     */
     public const RELATIVE_LONG = 129;
+
+    /**
+     * @since 8.0
+     */
     public const RELATIVE_MEDIUM = 130;
+
+    /**
+     * @since 8.0
+     */
     public const RELATIVE_SHORT = 131;
+
+    /**
+     * @since 8.4
+     */
     public const PATTERN = -2;
 
     /**
@@ -2780,13 +2804,45 @@ class Spoofchecker
     public const SINGLE_SCRIPT = 16;
     public const INVISIBLE = 32;
     public const CHAR_LIMIT = 64;
+
+    /**
+     * @since 7.3
+     */
     public const ASCII = 268435456;
+
+    /**
+     * @since 7.3
+     */
     public const HIGHLY_RESTRICTIVE = 805306368;
+
+    /**
+     * @since 7.3
+     */
     public const MODERATELY_RESTRICTIVE = 1073741824;
+
+    /**
+     * @since 7.3
+     */
     public const MINIMALLY_RESTRICTIVE = 1342177280;
+
+    /**
+     * @since 7.3
+     */
     public const UNRESTRICTIVE = 1610612736;
+
+    /**
+     * @since 7.3
+     */
     public const SINGLE_SCRIPT_RESTRICTIVE = 536870912;
+
+    /**
+     * @since 8.3
+     */
     public const MIXED_NUMBERS = 128;
+
+    /**
+     * @since 8.3
+     */
     public const HIDDEN_OVERLAY = 256;
 
     /**
