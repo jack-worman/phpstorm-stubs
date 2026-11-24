@@ -1340,7 +1340,7 @@ class Normalizer
      * @link https://php.net/manual/en/class.normalizer.php
      * @removed 8.0
      */
-    public const NONE = "1";
+    public const NONE = 2;
 
     /**
      * Normalization Form D (NFD) - Canonical Decomposition

@@ -3,16 +3,17 @@
 namespace StubTests\Framework\Validator\Classes\Constants;
 
 use StubTests\Framework\Model\PHPClassConstant;
-use StubTests\Framework\Runner\PhpVersions;
+use StubTests\Framework\Storage\StubDataQueryInterface;
 use StubTests\Framework\Validator\AbstractConstantFlagCheck;
 use StubTests\Framework\Validator\KnownProblems\CheckType;
 use StubTests\Framework\Validator\Services\ConstantValueComparator;
+use StubTests\Framework\Validator\Services\LastReflectedVersionService;
 
 /**
  * Validates that the values of constants in class stubs match reflection.
  *
- * Value comparison is intentionally limited to the latest PHP version to avoid
- * false positives from historical value changes across PHP releases.
+ * Value comparison is limited to the last PHP version that has the constant: the latest one, or
+ * the one before PHP removed it. Earlier versions would only report historical value changes.
  *
  * For each class identified by $entityId the validator:
  * 1. Iterates all version-available constants declared directly in the stub.
@@ -20,7 +21,7 @@ use StubTests\Framework\Validator\Services\ConstantValueComparator;
  *    inherited constants).
  * 3. If the constant is not found in reflection it is silently skipped — existence is
  *    ClassConstantsCheck's responsibility.
- * 4. When both sides are found and the PHP version is LATEST, their values are compared
+ * 4. When both sides are found and no later PHP version has the constant, their values are compared
  *    and any mismatch, of value or of type, is reported as a failure. Either side having a
  *    null value skips
  *    the check (complex/dynamic expressions cannot be compared).
@@ -33,16 +34,6 @@ use StubTests\Framework\Validator\Services\ConstantValueComparator;
  */
 class ClassConstantsValueCheck extends AbstractConstantFlagCheck
 {
-    /**
-     * Value comparison is only meaningful at the latest PHP version (see the class docblock), so
-     * declare that instead of inheriting the unconditional `true`. Without this the whole run()
-     * body executed for all 13 versions and its result was discarded.
-     */
-    public function supports(string $phpVersion): bool
-    {
-        return $phpVersion === PhpVersions::LATEST->value;
-    }
-
     protected function getCheckName(): CheckType
     {
         return CheckType::CLASS_CONSTANTS_VALUE;
@@ -55,6 +46,19 @@ class ClassConstantsValueCheck extends AbstractConstantFlagCheck
         string $phpVersion
     ): ?string {
         if ($reflConstant->getValue() === null || $stubConstant->getValue() === null) {
+            return null;
+        }
+
+        [$classId, $name] = explode('::', $constantEntityId, 2);
+        $existsIn = function (StubDataQueryInterface $reflection) use ($classId, $name): bool {
+            foreach ($this->lookupEntityById($reflection, $classId)?->getConstants() ?? [] as $constant) {
+                if ($constant->getName() === $name) {
+                    return true;
+                }
+            }
+            return false;
+        };
+        if (!(new LastReflectedVersionService($this->reflectionProvider))->isLastVersionWith($phpVersion, $existsIn)) {
             return null;
         }
 

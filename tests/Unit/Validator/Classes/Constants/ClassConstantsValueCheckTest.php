@@ -30,11 +30,11 @@ class ClassConstantsValueCheckTest extends CheckTestCase
 
     // ── supports() ────────────────────────────────────────────────────────────
 
-    public function testSupportsOnlyLatestVersion(): void
+    public function testSupportsAllVersions(): void
     {
         $check = new ClassConstantsValueCheck();
-        $this->assertFalse($check->supports(PhpVersions::PHP_5_6->value));
-        $this->assertFalse($check->supports(PhpVersions::PHP_8_1->value));
+        $this->assertTrue($check->supports(PhpVersions::PHP_5_6->value));
+        $this->assertTrue($check->supports(PhpVersions::PHP_8_1->value));
         $this->assertTrue($check->supports(PhpVersions::LATEST->value));
     }
 
@@ -142,11 +142,8 @@ class ClassConstantsValueCheckTest extends CheckTestCase
         $this->assertStringContainsString("reflection is int 2, stub is string '2'", $result->getFailures()[$classId . '::VERSION']);
     }
 
-    public function testValueMismatchSkippedOnNonLatestPhp(): void
+    public function testValueMismatchSkippedWhileALaterVersionHasTheConstant(): void
     {
-        // A genuine value mismatch (42 vs 0) must still be skipped below LATEST. The skip now
-        // happens in AbstractConstantFlagCheck::run(), which returns early when supports() is
-        // false — describeMismatch() no longer carries its own version guard.
         $classId = '\\DateTime';
         $reflClass = $this->makeClass($classId, constants: [$this->makeClassConstant('VERSION', 42)]);
         $stubClass = $this->makeClass($classId, constants: [$this->makeClassConstant('VERSION', 0)]);
@@ -161,31 +158,41 @@ class ClassConstantsValueCheckTest extends CheckTestCase
     }
 
     /**
-     * Pins the early return in AbstractConstantFlagCheck::run().
-     *
-     * Without it, run() executed its whole body for all 13 versions — building a reflection
-     * constant map that includes every inherited constant, then a per-constant known-problem
-     * lookup — and discarded the result via describeMismatch()'s version guard. The observable
-     * difference is that an unsupported version must not touch the storage at all, so a plain
-     * "no failures" assertion cannot detect the regression: assert the reflection lookup and the
-     * stub storage are never consulted.
+     * Normalizer::NONE was removed in PHP 8.0, so the latest version can't compare it.
      */
-    public function testUnsupportedVersionShortCircuitsBeforeTouchingStorage(): void
+    public function testRemovedConstantIsComparedAtItsLastVersion(): void
     {
-        $classId = '\\DateTime';
+        $classId = '\\Normalizer';
+        $stubs = $this->createMockStorageManager();
+        $stubs->method('getClasses')->willReturn([$this->makeClass($classId, constants: [$this->makeClassConstant('NONE', '1')])]);
 
-        $provider = $this->createMock(ReflectionProviderInterface::class);
-        $provider->expects($this->never())->method('getReflection');
+        $result = (new ClassConstantsValueCheck($this->providerWithNormalizerNoneUntil74()))->run($stubs, $classId, PhpVersions::PHP_7_4->value);
 
-        $stubs = $this->createMock(StubDataQueryInterface::class);
-        $stubs->expects($this->never())->method('getClasses');
+        $this->assertTrue($result->hasFailures());
+        $this->assertStringContainsString("reflection='2', stub='1'", $result->getFailures()[$classId . '::NONE']);
+    }
 
-        $check = new ClassConstantsValueCheck($provider);
-        self::assertFalse($check->supports(PhpVersions::PHP_8_0->value), 'guards the premise of this test');
+    public function testRemovedConstantIsNotComparedBeforeItsLastVersion(): void
+    {
+        $classId = '\\Normalizer';
+        $stubs = $this->createMockStorageManager();
+        $stubs->method('getClasses')->willReturn([$this->makeClass($classId, constants: [$this->makeClassConstant('NONE', 1)])]);
 
-        $result = $check->run($stubs, $classId, PhpVersions::PHP_8_0->value);
+        $result = (new ClassConstantsValueCheck($this->providerWithNormalizerNoneUntil74()))->run($stubs, $classId, PhpVersions::PHP_7_3->value);
 
         $this->assertFalse($result->hasFailures());
+    }
+
+    private function providerWithNormalizerNoneUntil74(): ReflectionProviderInterface
+    {
+        $provider = $this->createStub(ReflectionProviderInterface::class);
+        $provider->method('getReflection')->willReturnCallback(function (string $phpVersion): StubDataQueryInterface {
+            $constants = version_compare($phpVersion, '8.0', '<') ? [$this->makeClassConstant('NONE', 2)] : [];
+            $manager = $this->createMockStorageManager();
+            $manager->method('getClasses')->willReturn([$this->makeClass('\\Normalizer', constants: $constants)]);
+            return $manager;
+        });
+        return $provider;
     }
 
     public function testNullStubValueSkipsValueCheck(): void

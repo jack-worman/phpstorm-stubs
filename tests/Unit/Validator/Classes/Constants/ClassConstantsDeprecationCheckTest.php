@@ -5,7 +5,9 @@ namespace StubTests\Unit\Validator\Classes\Constants;
 use StubTests\Framework\Model\PHPClassConstant;
 use StubTests\Framework\Runner\PhpVersions;
 use StubTests\Framework\Validator\Classes\Constants\ClassConstantsDeprecationCheck;
+use StubTests\Framework\Storage\StubDataQueryInterface;
 use StubTests\Framework\Validator\Contracts\CheckResultSet;
+use StubTests\Framework\Validator\Contracts\ReflectionProviderInterface;
 use StubTests\Framework\Validator\KnownProblemsRegistry;
 use StubTests\Unit\Validator\CheckTestCase;
 
@@ -29,6 +31,23 @@ class ClassConstantsDeprecationCheckTest extends CheckTestCase
         $this->assertFalse($check->supports(PhpVersions::PHP_8_3->value));
         $this->assertTrue($check->supports(PhpVersions::PHP_8_4->value));
         $this->assertTrue($check->supports(PhpVersions::LATEST->value));
+    }
+
+    /**
+     * Pins the early return in AbstractConstantFlagCheck::run(): an unsupported version must not
+     * build the reflection constant map or touch the stub storage.
+     */
+    public function testUnsupportedVersionShortCircuitsBeforeTouchingStorage(): void
+    {
+        $provider = $this->createMock(ReflectionProviderInterface::class);
+        $provider->expects($this->never())->method('getReflection');
+
+        $stubs = $this->createMock(StubDataQueryInterface::class);
+        $stubs->expects($this->never())->method('getClasses');
+
+        $result = (new ClassConstantsDeprecationCheck($provider))->run($stubs, '\\ZipArchive', PhpVersions::PHP_8_0->value);
+
+        $this->assertFalse($result->hasFailures());
     }
 
     public function testMatchingDeprecationPasses(): void
